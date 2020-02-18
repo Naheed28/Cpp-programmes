@@ -1,0 +1,120 @@
+LightOJ 1009 - Back to Underworld
+// Accepted
+
+/*
+
+Analysis:
+
+Consider a Graph as 1-2, 2-3, 2-4; if 1 is a vampire than 2 is lykan, as 2 is lykan so 3 and 4 will be vampire.
+Now total vampires are 3 and lykan is 1, so maximum from this graph is 3. [1=3=4=vampire]
+
+another graph is 5-6 and 6-7, 6-8. consider 5 is a vampire so 6 will be lykan.
+as 6 is lykan than the all adjacent of 6 will be vampire, i mean, 7=8=vampire.
+Now total vampires are 3 and lykan is 1, so maximum from this graph is 3.
+
+And the Answer of this total Graph is 3 + 3 = 6; [As, Graphs are not connected]
+
+Decision: If a node is Vampire than all of the adjacent of that node will be Lykan and if a node is Lykan than all of the adjacent of that node will be Vampire, thats why i have represented them as two color black and red. Black means Vampire and Red means Lykan, besides every time i have increased number of vampire and lykans and finally add the maximum as graphs are not connected.
+
+*/
+
+#include<bits/stdc++.h>
+
+
+using namespace std ;
+
+const int high = 20009;
+const int BLACK = 1;
+const int RED = 2;
+const int WHITE = 0;
+
+vector<int>adj[high];
+int ans=0 , color[high] , vampire=0 , lykan=0;
+
+void adj_clear()
+{
+    for(int i=0; i<high; i++)
+    {
+        adj[i].clear();
+    }
+}
+
+void BFS(int s)
+{
+    queue<int>Q;
+    color[s] = BLACK; // consider it as a vampire=black
+    vampire++;
+    Q.push(s);
+
+    while(!Q.empty())
+    {
+        int u = Q.front();
+        Q.pop();
+
+        for(int i=0; i<adj[u].size(); i++)
+        {
+            int v = adj[u][i];
+
+            if(color[v] == WHITE)
+            {
+                Q.push(v);
+
+                if(color[u] == BLACK)
+                {
+                    color[v] = RED;
+                    lykan++;
+                }
+
+                else
+                {
+                    color[v] = BLACK;
+                    vampire++;
+                }
+            }
+        }
+    }
+}
+
+int main()
+{
+    int t , tc=0 , u , n , v , i=0;
+
+    scanf("%d", &t);
+
+    while(t--)
+    {
+        adj_clear();
+        memset(color , 0 , sizeof color);
+
+        vampire = 0;
+        lykan = 0;
+        ans = 0;
+
+        scanf("%d", &n);
+
+        for(i=0; i<n; i++)
+        {
+            scanf("%d %d", &u , &v);
+
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+
+        for(i=0; i<high; i++)
+        {
+            if(!adj[i].empty() and color[i] == WHITE)
+            {
+                vampire = 0;
+                lykan = 0;
+
+                BFS(i);
+
+                ans += max(vampire , lykan);
+            }
+        }
+
+        printf("Case %d: %d\n" , ++tc , ans);
+    }
+
+    return 0;
+}
