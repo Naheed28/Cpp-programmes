@@ -1,0 +1,208 @@
+The city of Townsville! This nice city is the home for the power puff girls - Blossom, Bubbles and Buttercup. To introduce their
+personality we can sing a song:
+
+Blossom, commander and the leader;
+
+Bubbles, she is the joy and the laughter;
+
+Buttercup, she is the toughest fighter.
+
+These super girls defend Townsville from monsters and super villains using their super powers, intelligence. They live in a home in 
+Townsville with the professor who is like their father.
+The girls are young now and they don't like to fight the monsters anymore. So, if they are outside their home, they are found shopping. 
+And when they get back to home, they simply watch the TV serials. It's such a horrible fact that the super intelligent girls are 
+wasting their time watching serials that consist of the rivalries between Wives and their Mother in Laws. And when they use computers 
+they are usually found using the facenote (a dangerous1 social networking site).
+
+So, such wonderful girls just became lazy and useless. Often they are seen fighting each other, the comments that can be heard, 
+are like, 'Tulsi is the best.', 'Gopi is better than Rashee.' The professor is quite upset with the girls, and he can't even watch 
+any science show or sports because of these irritating serials.
+
+So, the professor made a plan and asked the girls to go for shopping such that he can watch an important science show in the TV. 
+The girls became very excited and they went out for shopping. But soon they realize that one of their favorite serials will start soon, 
+and they need to get back home for that serial.
+
+To be more specific let's consider the city as a 2D grid. In the grid there are some symbols, the meaning of them are:
+
+1.      '.'         means an empty place
+
+2.      'a'        denotes the position of Blossom
+
+3.      'b'       denotes the position of Bubbles
+
+4.      'c'        denotes the position of Buttercup
+
+5.      'm'      denotes that there is a monster
+
+6.      'h'       denotes their home
+
+7.      '#'       denotes a wall and the girls can't pass through it
+
+The three girls move simultaneously. And in each minute, from their current cells, they can move to any four adjacent cells (North,
+East, West, South) if the destination cell is neither a wall nor the cell contains a monster. Because they want to get home as soon as
+possible, they want to avoid the monsters. You can assume that they can move to a common cell if necessary.
+Now you are given the information of the city and their positions. You have to find the minimum time when they all are in home.
+
+Input
+Input starts with an integer T (≤ 100), denoting the number of test cases.
+Each case starts with a line containing two integers: m and n (4 ≤ m, n ≤ 20), m denotes the number of rows and n denotes the number of columns of the modeled grid. Each of the next m lines contains n characters representing the city.
+
+You can assume that 'a', 'b', 'c', 'h' will occur exactly once in the grid. The outer boundaries will always be marked by '#'.
+
+Output
+For each case, print the case number and the minimum time needed when they all are in their home. You can assume that a solution will always exist.
+
+Sample Input
+2
+
+6 8
+
+########
+
+#...c..#
+
+#......#
+
+#.a.h.b#
+
+#......#
+
+########
+
+5 9
+
+#########
+
+#mmm...c#
+
+#ma.h####
+
+#m....b.#
+
+#########
+
+Sample Output
+Case 1: 2
+
+Case 2: 4
+
+
+
+                                              The code is given below
+
+#include <iostream>
+#include <bits/stdc++.h>
+
+using namespace std ;
+int dx[] = {-1 ,0 ,1 ,0 };
+int dy[] = {0 , 1 ,0 ,-1};//direction array 
+
+
+int row = 0 , coloumn = 0 ;
+
+char vis[22][22] ;
+int d[22][22] ; //distance from home
+
+void display()
+{
+    for(int i = 0 ; i < row ;i++)
+    {
+        for(int j = 0 ; j < coloumn ;j++)
+        {
+            cout << vis[i][j] << " " ;
+        }
+        cout << endl ;
+    }
+}
+
+void bfs(int x  ,int y )
+{
+    vis[x][y] = '1' ;
+    queue<pair<int ,int> > q ;
+    q.push(make_pair(x , y)) ;
+    
+    while(!q.empty())
+    {
+        pair <int ,int > v ;
+        v = q.front() ;
+        q.pop() ; // poping the front element ;
+
+        for(int i = 0 ; i < 4 ;i++)
+        {
+            int tx = v.first + dx[i] ;//for temporary neighbour cell ;
+            int ty = v.second +dy[i] ;
+
+            if(vis[tx][ty] != '1' && vis[tx][ty] != 'm' && vis[tx][ty] != '#' && tx < row and tx >= 0 and ty < coloumn and ty >= 0 )
+            {
+                vis[tx][ty] = '1' ; //if not visited then 1
+                d[tx][ty] = d[v.first][v.second] + 1 ;
+                
+                q.push(make_pair(tx , ty)) ;
+            }
+        }
+    }
+}
+
+int main()
+{
+    int t ;
+    cin >> t ;
+
+    for(int i = 0 ; i <t ;i++)
+    {
+        cin >> row >> coloumn ;
+        if(row == 0 and coloumn == 0)break;
+        memset(vis , 0 ,sizeof(vis)) ;
+        memset(d , 0 ,sizeof(d)) ;
+        
+
+
+        int homex , homey ; //for starting node home
+        int ax , ay ; //denotes the position of Blossom
+        int bx , by ; //denotes the position of Bubbles
+        int cx , cy ; //denotes the position of Buttercup
+
+
+        for(int i = 0 ; i < row ;i++)
+        {
+            for(int j = 0 ; j <coloumn ;j++)
+            {
+                cin >> vis[i][j] ;   //inserting the values
+                if(vis[i][j] == 'h')
+                {
+                    homex = i ;
+
+                    homey = j ;
+                }
+                else if(vis[i][j] == 'a')
+                {
+                    ax = i ;
+                    ay = j ;
+                }
+                else if(vis[i][j] == 'b')
+                {
+                    bx = i ;
+                    by = j ;
+                }
+                else if(vis[i][j] == 'c')
+                {
+                    cx = i ;
+                    cy = j ;
+                }
+            }
+        }
+
+        bfs(homex ,homey) ;
+        int cnt = 0 ;
+        cnt  = max(d[ax][ay] , max(d[bx][by],d[cx][cy])) ;//max distance from the three
+        printf("Case %d: %d\n",i+1 ,cnt) ;
+        cnt = 0 ;
+
+
+        
+
+        //display() ;
+    }
+
+    return 0 ;
+}
