@@ -1,0 +1,142 @@
+Robin Hood likes to loot rich people since he helps the poor people with this money. Instead of keeping all the money together he does
+another trick. He keeps n sacks where he keeps this money. The sacks are numbered from 0 to n-1.
+
+Now each time he can he can do one of the three tasks.
+
+1)   Give all the money of the ith sack to the poor, leaving the sack empty.
+
+2)   Add new amount (given in input) in the ith sack.
+
+3)   Find the total amount of money from ith sack to jth sack.
+
+Since he is not a programmer, he seeks your help.
+
+Input
+Input starts with an integer T (≤ 5), denoting the number of test cases.
+Each case contains two integers n (1 ≤ n ≤ 105) and q (1 ≤ q ≤ 50000). The next line contains n space separated integers in 
+the range [0, 1000]. The ith integer denotes the initial amount of money in the ith sack (0 ≤ i < n).
+Each of the next q lines contains a task in one of the following form:
+
+1 i        Give all the money of the ith (0 ≤ i < n) sack to the poor.
+
+2 i v     Add money v (1 ≤ v ≤ 1000) to the ith (0 ≤ i < n) sack.
+
+3 i j      Find the total amount of money from ith sack to jth sack (0 ≤ i ≤ j < n).
+
+Output
+For each test case, print the case number first. If the query type is 1, then print the amount of money given to the poor. 
+If the query type is 3, print the total amount from ith to jth sack.
+
+Sample Input
+1
+5 6
+3 2 1 4 5
+1 4
+2 3 4
+3 0 3
+1 2
+3 0 4
+1 1
+
+Sample Output
+
+Case 1:
+5
+14
+1
+13
+2
+
+
+                              The code is given below
+#include <bits/stdc++.h>
+using namespace std;
+
+int sum[400050];
+int num[100050];
+
+void init(int node, int L, int R) //making a segment tree 
+{
+    if (L == R) {
+        sum[node] = num[L];
+        return;
+    }
+    int mid = (L+R) /2;
+    init(2*node, L, mid);
+    init(2*node+1, mid+1, R);
+    sum[node] = sum[2*node] + sum[2*node+1];
+}
+void update (int node, int L, int R, int pos, int value) {
+    
+    if (L > pos || R < pos) 
+        return;
+    if (L == R && L == pos) 
+    {
+        sum[node] += value; //adding the value
+        return;
+    }
+    int mid = (L+R) /2;
+    update (2*node, L, mid, pos, value);            // if (mid >= pos) update (2*at, L, mid, pos, value);....left side //more effecient process
+    update (2*node+1, mid+1, R, pos, value);        //  else update (2*at+1, mid+1, R, pos, value);.....right side
+    sum[node] = sum[2*node] + sum[2*node+1];
+}
+int query (int node, int L, int R, int l, int r) {
+    if (L > r || R < l) 
+        return 0;
+    if (L >= l && R <= r) 
+        return sum[node];
+    int mid = (L+R) /2;
+    int x = query (2*node, L, mid, l, r);
+    int y = query (2*node+1, mid+1, R, l, r);
+    return x+y;
+}
+int main ()
+{
+    
+    int t, k(0), n, q, a, b, c;
+    scanf (" %d", &t);
+
+    while (t--)
+    {
+        scanf ("%d %d", &n, &q);
+
+        for (int i = 0; i < n; i++)
+            scanf ("%d", &num[i]);
+
+        memset(sum , 0 , sizeof sum) ;
+
+        init(1, 0, n-1);
+        
+
+        printf ("Case %d:\n", ++k);
+        
+        while (q--) 
+        {
+            scanf ("%d", &a);
+            if (a == 1) 
+            {
+                scanf ("%d", &b);
+                printf ("%d\n", num[b]);
+                update (1, 0, n-1, b, -num[b]);
+                num[b] = 0;//since we are using the num for printing ,so it should be updated too ..
+            }
+            else if (a == 2) 
+            {
+                scanf ("%d %d", &b, &c);
+                update(1, 0, n-1, b, c);
+                num[b] += c ;//since we are using the num for printing ,so it should be updated too ..
+            }
+            else if (a == 3) 
+            {
+                scanf ("%d %d", &b, &c);
+                int x = query (1, 0, n-1, b, c);
+                printf ("%d\n", x);
+            }
+            
+        }
+    }
+    return 0;
+}
+
+
+                                                    The End
