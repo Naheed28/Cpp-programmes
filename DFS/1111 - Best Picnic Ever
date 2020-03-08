@@ -1,0 +1,135 @@
+K people are having a picnic. They are initially in N cities, conveniently numbered from 1 to N. The roads between cities are connected
+by M one-way roads (no road connects a city to itself).
+
+Now they want to gather in the same city for their picnic, but (because of the one-way roads) some people may only be able to
+get to some cities. Help them by figuring out how many cities are reachable by all of them, and hence are possible picnic locations.
+
+Input
+Input starts with an integer T (≤ 10), denoting the number of test cases.
+
+Each case starts with three integers K (1 ≤ K ≤ 100), N (1 ≤ N ≤ 1000), M (1 ≤ M ≤ 10000). Each of the next K lines will contain 
+an integer (1 to N) denoting the city where the ith person lives. Each of the next M lines will contain two
+integers u v (1 ≤ u, v ≤ N, u ≠ v) denoting there is a road from u to v.
+
+Output
+For each case, print the case number and the number of cities that are reachable by all of them via the one-way roads.
+
+Sample Input
+Output for Sample Input
+1
+
+2 4 4
+
+2
+
+3
+
+1 2
+
+1 4
+
+2 3
+
+3 4
+
+Case 1: 2
+
+ 
+
+SPECIAL THANKS: JANE ALAM JAN (DESCRIPTION, SOLUTION, DATASET)
+
+
+
+
+                  solution
+#include <bits/stdc++.h>
+using namespace std;
+#define N 1005 
+
+
+
+vector <int> adj[1005] ;   //Vector for maintaining adjacency list explained above 
+
+int n;
+int m;
+int k;
+int city[N];
+int vis[N];
+int cnt[N];
+
+int dfs(int j, int inc)
+{
+	
+	cnt[j] += inc;
+
+	for (int i = 0; i < adj[j].size(); i++) {
+		int x;
+		x = adj[j][i];
+		
+		if(vis[x] == 0) {
+			vis[x] = 1;
+			dfs(x, inc);
+		}
+	}
+
+}
+void clear()
+{
+	for(int i = 0 ; i  <N ;i ++)
+	{
+		adj[i].clear() ;
+	}
+}
+
+int main()
+{
+	
+	int t;
+	int x;
+	int y;
+	int inc;
+	scanf("%d", &t);
+
+	for (int cs = 1; cs <= t; cs++) {
+		scanf("%d", &k);
+		scanf("%d", &n);
+		scanf("%d", &m);
+			
+
+		
+		memset(city, 0, sizeof city);
+		memset(cnt, 0, sizeof cnt);
+
+		for (int i = 0; i < k; i++) {
+			scanf("%d", &x);
+			city[x]++;//for marking the city where people are and incrementing its value
+		}
+
+		for (int i = 0; i < m; i++) {
+			scanf("%d", &x);
+			scanf("%d", &y);
+			adj[x].push_back(y); //since its a one way road 
+		}
+
+		for (int i = 1; i <= n; i++) {
+			memset(vis, 0, sizeof vis);//each time we have to reset it
+			if(city[i]) //if there is person in a city 
+			{
+				vis[i] = 1; //mark it 1
+				inc = city[i];//since we have to count for all the persons in  a single city
+				dfs(i, inc);
+			}
+		}
+		
+		int ans;
+		ans = 0;
+
+		for (int i = 1; i <= n; i++) {
+			if(cnt[i] >= k)
+				ans++;
+		}
+
+		printf("Case %d: %d\n", cs, ans);
+		clear() ;
+	}
+}
