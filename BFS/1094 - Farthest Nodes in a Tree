@@ -1,0 +1,185 @@
+Given a tree (a connected graph with no cycles), you have to find the farthest nodes in the tree. 
+The edges of the tree are weighted and undirected. That means you have to find two nodes in the tree whose distance is
+maximum amongst all nodes.
+
+Input
+Input starts with an integer T (≤ 10), denoting the number of test cases.
+
+Each case starts with an integer n (2 ≤ n ≤ 30000) denoting the total number of nodes in the tree.
+The nodes are numbered from 0 to n-1. Each of the next n-1 lines will contain three integers u v w (0 ≤ u, v < n, u ≠ v, 1 ≤ w ≤ 10000)
+denoting that node u and v are connected by an edge whose weight is w. You can assume that the input will form a valid tree.
+
+Output
+For each case, print the case number and the maximum distance.
+
+Sample Input
+2
+
+4
+
+0 1 20
+
+1 2 30
+
+2 3 50
+
+5
+
+0 2 20
+
+2 1 10
+
+0 3 29
+
+0 4 50
+
+Sample Output
+Case 1: 100
+
+Case 2: 80
+
+
+     HINT:Simply find the tree diameter .
+Choose 0 and find the farthest node from 0 using BFS (or DFS ) and then find the farthest node from that node and find that distance .
+That 's our answer .
+
+Number of nodes is huge so don't use adjacency matrix or any 2-D arrays . Will get you MLE. 
+
+
+solution:
+
+
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std ;
+
+vector<int>adj[30005] ;
+vector<int>weight[30005] ;
+
+bool vis[30005] ;
+int d[30005] ; //distance from source
+
+int bfs1(int s)
+{
+	vis[s] = true ;
+	queue<int> q ;
+	q.push(s) ;
+	d[s] = 0 ; //distance from source 
+
+	int max_dis = 0 ;
+	int farthest_node = 0 ;
+
+	while(!q.empty())
+	{
+		int u ;
+		u = q.front() ;
+		vis[u] = true ;
+		q.pop() ;
+		for(int i = 0 ; i  < adj[u].size() ;i++)
+		{
+			int v= adj[u][i] ;
+
+			if(!vis[v])
+			{
+				q.push(v) ;
+				int wt = weight[u][i] ;
+				d[v] = d[u] + wt ; //adding the weight
+				if(d[v] > max_dis)
+				{
+					max_dis = d[v] ;
+					farthest_node =  v ;
+ 				}
+ 			}
+
+		}
+	}
+	return farthest_node ; //returning the farthest node
+
+
+}
+int bfs2(int s)
+{
+	vis[s] = true ;
+	queue<int> q ;
+	q.push(s) ;
+	d[s] = 0 ; //distance from source 
+
+	int max_dis = 0 ;
+	int farthest_node = 0 ;
+
+	while(!q.empty())
+	{
+		int u ;
+		u = q.front() ;
+		vis[u] = true ;
+		q.pop() ;
+		for(int i = 0 ; i  < adj[u].size() ;i++)
+		{
+			int v= adj[u][i] ;
+
+			if(!vis[v])
+			{
+				q.push(v) ;
+				int wt = weight[u][i] ;
+				d[v] = d[u] + wt ; //adding the weight
+				if(d[v] > max_dis)
+				{
+					max_dis = d[v] ;
+					farthest_node =  v ;
+ 				}
+ 			}
+
+		}
+	}
+	return max_dis ; //returning the maximum distance
+
+
+}
+
+
+
+int main()
+{
+	int t ;
+	scanf("%d",&t) ;
+	for(int i = 0 ; i < t ; i++)
+	{
+		int n ;
+		scanf("%d" , &n);
+		for(int j = 0 ; j < n-1 ;j++)
+		{
+			int u , v, w ;
+			scanf("%d %d %d" ,&u,&v,&w) ;
+			adj[u].push_back(v) ;
+			adj[v].push_back(u) ;
+			weight[u].push_back(w) ;
+			weight[v].push_back(w) ;
+		}
+		memset(vis , 0 , sizeof vis) ;
+		memset(d , 0 , sizeof d) ;
+
+		int first_node = bfs1(0) ; //first node in the tree diameter
+
+		memset(vis , 0 , sizeof vis) ;
+		memset(d , 0 , sizeof d) ;
+
+		int tree_diameter = bfs2(first_node) ;
+
+
+		printf("Case %d: %d\n",i+1 , tree_diameter);
+
+		memset(adj , 0 , sizeof adj) ;//clearing the vector
+		memset(weight , 0 , sizeof weight) ;
+
+
+
+	}
+
+
+
+	return 0 ;
+}
+
+
+
+                                                            THE END
