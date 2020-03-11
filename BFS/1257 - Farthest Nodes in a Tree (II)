@@ -1,0 +1,213 @@
+                                                1257 - Farthest Nodes in a Tree (II)
+                                                
+Given a tree (a connected graph with no cycles), you have to find the cost to go to the farthest node from each node. 
+The edges of the tree are weighted and undirected.
+
+Input
+Input starts with an integer T (≤ 10), denoting the number of test cases.
+
+Each case starts with an integer n (2 ≤ n ≤ 30000) denoting the total number of nodes in the tree. 
+The nodes are numbered from 0 to n-1. Each of the next n-1 lines will contain three integers u v w (0 ≤ u, v < n, u ≠ v, 1 ≤ w ≤ 10000)
+denoting that node u and v are connected by an edge whose weight is w. You can assume that the input will form a valid tree.
+
+Output
+For each case, print the case number in a line first. Then for each node (from 0 to n - 1) print the cost to go to the farthest 
+node in a separate line.
+
+Sample Input
+Output for Sample Input
+2
+
+4
+
+0 1 20
+
+1 2 30
+
+2 3 50
+
+5
+
+0 2 20
+
+2 1 10
+
+0 3 29
+
+0 4 50
+
+Case 1:
+
+100
+
+80
+
+50
+
+100
+
+Case 2:
+
+50
+
+80
+
+70
+
+79
+
+80
+
+Note
+Dataset is huge, use faster I/O methods.
+
+
+
+                                  solution:
+                                  
+                                  
+ #include<bits/stdc++.h>
+using namespace std;
+ 
+#define pb push_back
+int node , Max = -1 , X ; //X is for storing the farthest node
+
+vector <int> dis1(30004,0);
+vector <int> dis2(30004,0);
+ 
+ 
+void bfs(int start, vector<pair<int, int> > v[])
+{
+    vector <int> vis(30004, 0);
+    vector <int> dis(30004,-1);
+ 
+    dis[start] = 0;
+ 
+    queue <int> q;
+    q.push(start);
+ 
+    while(!q.empty())
+    {
+        int u;
+        u = q.front();
+        q.pop();
+        vis[u] = 1;
+        if(dis[u]>Max)
+        {
+            Max = dis[u];
+            X = u ;
+        }
+ 
+        for(int i=0; i<v[u].size(); i++)
+        {
+ 
+            if(!vis[v[u][i].first])
+            {
+ 
+                q.push(v[u][i].first);
+                vis[v[u][i].first] = 1;
+                dis[v[u][i].first] = dis[u]  +  v[u][i].second; //adding the weight
+ 
+            }
+ 
+        }
+ 
+    }
+ 
+}
+ 
+void BFS(int start, vector<pair<int, int> > v[], vector <int> &dis)
+{
+    vector <int> vis(30000+4,0);
+ 
+    dis[start] = 0;
+ 
+ 
+    queue <int> q;
+    q.push(start);
+ 
+    while(!q.empty())
+    {
+ 
+        int u;
+        u = q.front() ;
+        q.pop();
+        vis[u] = 1;
+        if(dis[u]>Max)
+        {
+            Max = dis[u];
+            X = u ;
+        }
+ 
+        for(int i=0; i<v[u].size(); i++)
+        {
+ 
+            if(!vis[v[u][i].first]){
+ 
+                q.push(v[u][i].first);
+                vis[v[u][i].first] = 1;
+                dis[v[u][i].first] = dis[u]  +  v[u][i].second; //adding the weight
+ 
+ 
+            }
+ 
+        }
+ 
+    }
+ 
+}
+ 
+ 
+int main()
+{
+    
+ 
+    int t , k(0) ;
+    cin >> t;
+ 
+    while(t--)
+    {
+        vector < pair<int,int> > v[30000+5];
+ 
+        cin >> node;
+ 
+        for(int i = 0 ; i < node-1 ; i++)
+        {
+            int a1 , a2 , w ;
+            cin >> a1 >> a2 >> w;
+ 
+            v[a1].pb({a2,w});
+            v[a2].pb({a1,w});
+ 
+        }
+ 
+ 
+  
+ 
+ 
+ 
+        bfs( 0 , v ); //first bfs to find the farthest node
+    
+        Max=-1;
+    
+        BFS(X,v,dis1); //second BFS for the starting node
+        Max=-1;
+        BFS(X,v,dis2); //third BFS
+    
+        cout << "Case " << ++k << ":\n";
+        for(int i=0; i<node; i++)
+        {
+            cout << max(dis1[i],dis2[i]) << "\n";
+        }
+ 
+            Max=-1;
+ 
+ 
+    }
+ 
+ 
+    return 0;
+}
+
+
+                                                    THE END
