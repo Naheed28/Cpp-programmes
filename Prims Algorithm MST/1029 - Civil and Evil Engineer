@@ -1,0 +1,200 @@
+A Civil Engineer is given a task to connect n houses with the main electric power station directly or indirectly. The Govt has 
+given him permission to connect exactly n wires to connect all of them. Each of the wires connects either two houses, or a 
+house and the power station. The costs for connecting each of the wires are given.
+
+Since the Civil Engineer is clever enough and tries to make some profit, he made a plan. His plan is to find the best possible 
+connection scheme and the worst possible connection scheme. Then he will report the average of the costs.
+
+Now you are given the task to check whether the Civil Engineer is evil or not. That's why you want to calculate the average 
+before he reports to the Govt.
+
+Input
+Input starts with an integer T (≤ 100), denoting the number of test cases.
+
+Each case contains a blank line and an integer n (1 ≤ n ≤ 100) denoting the number of houses. You can assume that the 
+houses are numbered from 1 to n and the power station is numbered 0. Each of the next lines will contain three integers 
+in the form u v w (0 ≤ u, v ≤ n, 0 < w ≤ 10000, u ≠ v) meaning that you can connect u and v with a wire and the cost 
+will be w. A line containing three zeroes denotes the end of the case. You may safely assume that the data is given such 
+that it will always be possible to connect all of them. You may also assume that there will not be more than 12000 lines for a case.
+
+Output
+For each case, print the case number and the average as described. If the average is not an integer then print it 
+in p/q form. Where p is the numerator of the result and q is the denominator of the result; p and q are relatively-prime. 
+Otherwise print the integer average.
+
+Sample Input
+Output for Sample Input
+3
+
+ 
+1
+0 1 10
+0 1 20
+0 0 0
+
+3
+0 1 99
+0 2 10
+1 2 30
+2 3 30
+0 0 0
+
+2
+0 1 10
+0 2 5
+0 0 0
+
+Case 1: 15
+
+Case 2: 229/2
+
+Case 3: 15
+
+ 
+
+PROBLEM SETTER: JANE ALAM JAN
+
+
+
+
+Hint : The solution is using prims algorithm .we will call prim1 and prim2 where prim1 is for minheap and prim2 is for maxheap
+Alternative idea :Algorithm: Kruskal 
+Explanation: In Kruskal's Algorithm if we sort the edges in ascending order we get minimum spanning tree 
+             which best connection,if sorted in descending order we get maximum spanning tree which is worst connection.
+             
+             
+Solution:
+
+#include<bits/stdc++.h>
+#define PII pair<int,int>
+
+using namespace std ;
+
+const int MAX = 1e5 + 5 ;
+bool marked[MAX] ;
+vector <PII> adj[MAX] ;  //vector <pair<int,int> > adj[MAX] ;
+
+int prim1(int x)//for finding the minimum
+{
+	priority_queue <PII ,vector <PII> ,greater<PII>> Q ;
+	//for making a minheap,which means that the smallest value will be given the most priority
+	//priority_queue <PII> Q ; for max heap...
+	//long long int can be used for higher value
+	
+	int y ;
+	int minimumCost(0) ;
+
+	Q.push(make_pair(0 , x)) ;
+
+	while (!Q.empty())
+	{
+		//selecting the edge with minimum weight
+		PII p = Q.top();
+		Q.pop();
+		x = p.second ;
+		
+    //checking for cycle
+		if(marked[x] == true)
+            continue;
+        minimumCost += p.first;
+        marked[x] = true;
+        for(int i = 0 ; i < adj[x].size();i++)
+        {
+            y = adj[x][i].second;
+            if(marked[y] == false)
+                Q.push(adj[x][i]);
+        }
+	}
+	return minimumCost ;
+
+
+}
+
+int prim2(int x)//for finding the maximum
+{
+	priority_queue <PII> Q ;
+	//for making a maxheap,which means that the largest value will be given the most priority
+	
+	//long long int can be used for higher value
+	
+	int y ;
+	int maxcost(0) ;
+
+	Q.push(make_pair(0 , x)) ;
+
+	while (!Q.empty())
+	{
+		//selecting the edge with minimum weight
+		PII p = Q.top();
+		Q.pop();
+		x = p.second ;
+		
+    //checking for cycle
+		if(marked[x] == true)
+            continue;
+        maxcost += p.first;
+        marked[x] = true;
+        for(int i = 0 ; i < adj[x].size();i++)
+        {
+            y = adj[x][i].second;
+            if(marked[y] == false)
+                Q.push(adj[x][i]);
+        }
+	}
+	return maxcost ;
+
+
+}
+
+
+
+
+int main()
+{
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+	int t ;
+	cin >> t ;
+	for(int i = 0 ; i < t ; i++)
+	{
+		int node ;
+		cin >> node ;
+
+		while (1)
+		{
+			int x , y , weight ;
+
+			cin >> x >> y >> weight ;
+			if(x == 0 and y == 0 and weight == 0)
+			break;
+			adj[x].push_back(make_pair(weight , y)) ;
+			adj[y].push_back(make_pair(weight , x)) ;
+		
+		}
+
+		//selecting 0 as starting node ;
+		int minimumCost = prim1(0) ;
+		memset(marked , false , sizeof marked) ;
+
+		int maxcost = prim2(0) ;
+		if((minimumCost+maxcost)%2 == 0)
+			printf("Case %d: %d\n" , i+1 , (maxcost+minimumCost)/2 ) ;
+		else 
+		{
+			printf("Case %d: %d/2\n" , i+1 , (maxcost+minimumCost) ) ;
+		}
+
+
+		memset(marked , false , sizeof marked) ;
+		for(int i = 0 ; i<= node;i++)
+			adj[i].clear() ;
+
+
+	}
+	
+
+
+
+	return 0 ;
+}
