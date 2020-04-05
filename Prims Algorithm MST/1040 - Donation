@@ -1,0 +1,180 @@
+A local charity is trying to gather donations of Ethernet cable. You realize that you probably have a lot of 
+extra cable in your house, and make the decision that you will donate as much cable as you can spare.
+
+You will be given the lengths (in meters) of cables between each pair of rooms in your house. You wish to 
+keep only enough cable so that every pair of rooms in your house is connected by some chain of cables, of 
+any length. The lengths are given in n lines, each having n integers, where n is the number of rooms in your 
+house. The jth integer of ith line gives the length of the cable between rooms i and j in your house.
+
+If both the jth integer of ith line and the ith integer of jth line are greater than 0, this means that you 
+have two cables connecting rooms i and j, and you can certainly donate at least one of them. If the ith integer 
+of ith line is greater than 0, this indicates unused cable in room i, which you can donate without affecting
+your home network in any way. 0 means no cable.
+
+You are not to rearrange any cables in your house; you are only to remove unnecessary ones. Return the maximum
+total length of cables (in meters) that you can donate. If any pair of rooms is not initially connected by some
+path, return -1.
+
+Input
+Input starts with an integer T (≤ 100), denoting the number of test cases.
+
+Each case begins with a blank line and an integer n (1 ≤ n ≤ 50) denoting the number of rooms in your house. 
+Then there will be n lines, each having n space separated integers, denoting the lengths as described. Each 
+length will be between 0 and 100.
+
+Output
+For each case of input you have to print the case number and desired result.
+
+Sample Input
+Output for Sample Input
+3
+
+ 
+
+2
+
+27 26
+
+1 52
+
+ 
+
+4
+
+0 10 10 0
+
+0 0 1 1
+
+0 0 0 2
+
+0 0 0 0
+
+ 
+
+4
+
+0 1 0 0
+
+1 0 0 0
+
+0 0 0 1
+
+0 0 1 0
+
+
+
+
+Explanation: Here we make a adjacency list from the adjacency matrix only for those vertices 
+	     which have non-zero value and are not self edges.
+	     Get the total sum of cables and remove the least amount of cable required to 
+	     connect all rooms which gives the maximum donation that can be made. 
+AlGO: kruskal
+       
+Solution:
+#include <bits/stdc++.h>
+
+
+using namespace std ;
+
+
+int nodes;
+vector<int>id(55);
+
+
+void initialize()
+{
+    for(int i=0;i<55;i++)
+		id[i] = i;
+}
+
+
+
+int root(int x)
+{
+    while(id[x] != x)
+    {
+        //id[x] = id[id[x]];
+        x = id[x];
+    }
+    return x;
+}
+void Union(int x,int y)
+{
+    id[root(x)]=id[root(y)];
+}
+
+
+int kruskal(vector<pair<int,pair<int,int> > >v)
+{
+    int minimum_Length = 0;
+
+    for(int i=0;i<v.size();i++)
+    {
+        int U=v[i].second.first;
+        int V=v[i].second.second;
+        int W=v[i].first;
+
+        if(root(U)!=root(V)){
+            minimum_Length += W;
+            Union(U,V);
+        }
+
+    }
+
+    int l = root(1);
+
+    for(int i = 2 ; i <= nodes ; i++)
+	{
+        if(root(i) !=l)
+			return -1;
+    }
+
+    return minimum_Length;
+}
+
+
+
+int main()
+{
+
+    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+    int t;
+    cin>>t;
+    for(int ii = 1 ; ii <= t ; ii++)
+    {
+        cin>>nodes;
+
+        vector<pair<int,pair<int,int> > >g;
+        int sum = 0;
+
+        for(int i = 1 ; i <= nodes ; i++)
+        {
+            for(int j = 1 ; j<=nodes ; j++)
+            {
+                int w;
+                cin>>w;
+                sum += w ;
+                if(w!=0 )
+				{
+                    g.push_back({w,{i,j}});//make_pair(w , make_pair(i,j))    equivalent
+                }
+
+            }
+        }
+        sort(g.begin(),g.end());
+        
+		initialize();
+        int minimumLength = kruskal(g);
+
+        cout<<"Case "<<ii<<": ";
+        if(minimumLength==-1)
+            cout << -1 << endl;
+        else
+            cout << sum - minimumLength << endl;
+    }
+
+
+
+    return 0;
+}
