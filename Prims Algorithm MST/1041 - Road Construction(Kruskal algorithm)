@@ -1,0 +1,194 @@
+                                              1041 - Road Construction
+   	                                      PDF (English)	Statistics	Forum
+                                  Time Limit: 2 second(s)	Memory Limit: 32 MB
+There are several cities in the country, and some of them are connected by bidirectional roads. Unfortunately,
+some of the roads are damaged and cannot be used right now. Your goal is to rebuild enough of the damaged roads
+that there is a functional path between every pair of cities.
+
+You are given the description of roads. Damaged roads are formatted as "city1 city2 cost" and non-damaged roads
+are formatted as "city1 city2 0". In this notation city1 and city2 are the case-sensitive names of the two cities
+directly connected by that road. If the road is damaged, cost represents the price of rebuilding that road. Every
+city in the country will appear at least once in roads. And there can be multiple roads between same pair of cities.
+
+Your task is to find the minimum cost of the roads that must be rebuilt to achieve your goal. If it is impossible
+to do so, print "Impossible".
+
+Input
+Input starts with an integer T (≤ 50), denoting the number of test cases.
+
+Each case begins with a blank line and an integer m (1 ≤ m ≤ 50) denoting the number of roads. Then there will be
+m lines, each containing the description of a road. No names will contain more than 50 characters. The road costs
+will lie in the range [0, 1000].
+
+Output
+For each case of input you have to print the case number and the desired result.
+
+Sample Input
+Output for Sample Input
+2
+
+ 
+
+12
+
+Dhaka Sylhet 0
+
+Ctg Dhaka 0
+
+Sylhet Chandpur 9
+
+Ctg Barisal 9
+
+Ctg Rajshahi 9
+
+Dhaka Sylhet 9
+
+Ctg Rajshahi 3
+
+Sylhet Chandpur 5
+
+Khulna Rangpur 7
+
+Chandpur Rangpur 7
+
+Dhaka Rajshahi 6
+
+Dhaka Rajshahi 7
+
+ 
+
+2
+
+Rajshahi Khulna 4
+
+Kushtia Bhola 1
+
+Case 1: 31
+
+Case 2: Impossible
+
+ 
+
+SPECIAL THANKS: JANE ALAM JAN (DESCRIPTION, SOLUTION, DATASET)
+
+
+Algorithm: Kruskal
+Explanation: Here we need to apply kruskal algorithm directly. But the problem is that we need to handle strings as vertices.
+	     So using a map data structure to map a value for each vertex. Finally we need to check for every vertex 
+	     whether they are connected or not.
+       
+       
+       
+Solution:
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int MAX = 1e5 + 5;
+int id[MAX], nodes, edges;
+
+vector<pair<int,pair<int,int> > >p ;
+map <string , int > m ;
+int cnt=0;
+
+void initialize()
+{
+    for(int i = 0;i <= 55;++i)
+        id[i] = i;
+}
+
+int root(int x)
+{
+    while(id[x] != x)
+    {
+        //id[x] = id[id[x]];
+        x = id[x];
+    }
+    return x;
+}
+
+void union1(int x, int y)
+{
+    int p = root(x);
+    int q = root(y);
+    id[p] = id[q];
+}
+
+long long kruskal(vector<pair<int,pair<int,int> > >p)
+{
+    int x, y;
+    long long cost, minimumCost = 0;
+    for(int i = 0;i < edges;++i)
+    {
+        // Selecting edges one by one in increasing order from the beginning
+        x = p[i].second.first;
+        y = p[i].second.second;
+        cost = p[i].first;
+        // Check if the selected edge is creating a cycle or not
+        if(root(x) != root(y))
+        {
+            minimumCost += cost;
+            union1(x, y);
+        }
+    }
+    int k = root(0) ;
+    for(int i = 1 ; i <cnt ;i++)
+    {
+        if(root(i) != k)
+        {
+            return -1 ;
+        }
+
+    }
+    return minimumCost;
+}
+
+int main()
+{
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t ;
+    cin >> t ;
+    for(int i = 0 ; i < t ;i++)
+    {
+        cin >> nodes ;
+        edges = nodes ;
+        for(int i = 0 ; i < edges ;i++)
+        {
+            string x , y ;
+            int weight ;
+            cin >> x >> y >> weight;
+            if(m.find(x) == m.end())//if its not in the map
+            {
+                m[x] = cnt++ ;
+            }
+            if(m.find(y) == m.end())//if its not in the map
+            {
+                m[y] = cnt++ ;
+            }
+            p.push_back({weight,{m[x], m[y]}});
+
+        }
+        initialize();
+        sort(p.begin() , p.end()) ;
+        int minimumCost = kruskal(p) ;
+        //cout << minimumCost <<endl ;
+
+        if(minimumCost != -1)
+            printf("Case %d: %d\n" , i+1 , minimumCost);
+        else
+            printf("Case %d: Impossible\n" , i+1 );
+       p.clear();
+       m.clear();
+	   cnt = 0 ;
+
+    }
+
+
+    return 0;
+}
+
+
+
+                              The end
+
