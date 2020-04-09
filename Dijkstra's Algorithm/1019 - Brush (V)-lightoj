@@ -1,0 +1,39 @@
+Tanvir returned home from the contest and got angry after seeing his room dusty. Who likes to see a dusty room after a brain storming programming contest? After checking a bit he found that there is no brush in him room. So, he called Atiq to get a brush. But as usual Atiq refused to come. So, Tanvir decided to go to Atiq's house.
+
+The city they live in is divided by some junctions. The junctions are connected by two way roads. They live in different junctions. And they can go to one junction to other by using the roads only.
+
+Now you are given the map of the city and the distances of the roads. You have to find the minimum distance Tanvir has to travel to reach Atiq's house.
+
+Input
+Input starts with an integer T (≤ 100), denoting the number of test cases.
+
+Each case starts with a blank line. The next line contains two integers N (2 ≤ N ≤ 100) and M (0 ≤ M ≤ 1000), means that there are N junctions and M two way roads. Each of the next M lines will contain three integers u v w (1 ≤ u, v ≤ N, w ≤ 1000), it means that there is a road between junction u and v and the distance is w. You can assume that Tanvir lives in the 1st junction and Atiq lives in the Nth junction. There can be multiple roads between same pair of junctions.
+
+Output
+For each case print the case number and the minimum distance Tanvir has to travel to reach Atiq's house. If it's impossible, then print 'Impossible'.
+
+Sample Input
+Output for Sample Input
+2
+
+ 
+
+3 2
+
+1 2 50
+
+2 3 10
+
+ 
+
+3 1
+
+1 2 40
+
+Case 1: 60
+
+Case 2: Impossible
+
+ 
+
+PROBLEM SETTER: JANE ALAM JAN
