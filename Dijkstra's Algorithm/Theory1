@@ -1,0 +1,62 @@
+Read the book for theory
+below a sample code is given
+
+
+#include <iostream>
+#include <bits/stdc++.h>
+#define PII pair<int , int> 
+
+using namespace std ;
+
+vector<PII>adj[10005] ;
+bool vis[10005] ;
+int dis[10005]  , n , m ;
+
+
+void dijkstra(int x)
+{
+    priority_queue <PII ,vector <PII> ,greater<PII>> q ;//for min heap
+    for(int i = 0 ; i <= n ;i++)dis[i]=200001;//for this the minimum value will begiven priority
+    
+    dis[x] = 0;
+    q.push({0,x});//saving the weight in the first position because of the priority_queue
+    while (!q.empty()) 
+    {
+        int a = q.top().second; 
+        q.pop();
+
+        if (vis[a]) continue;
+            vis[a] = true;
+        for (auto u : adj[a]) 
+        {
+            int b = u.second, w = u.first;
+            
+            if (dis[a] + w < dis[b]) 
+            {
+            dis[b] = dis[a] + w ;
+            q.push({dis[b],b});
+            }
+        }
+    }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    cin >> n >> m ;
+    for(int i =0 ; i < m ; i++)
+    {
+        int u , v, w ;
+        cin >> u >> v >> w ;
+        adj[u].push_back({w , v}) ;
+        adj[v].push_back({w , u}) ;
+
+    }
+    dijkstra(1) ;
+        
+    if(dis[n]==200001)cout << "Impossible" << endl; //if its is not visited or connected
+    else cout << dis[n] << endl;
+    return 0 ;
+}
