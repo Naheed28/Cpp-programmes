@@ -1,16 +1,25 @@
-Tanvir returned home from the contest and got angry after seeing his room dusty. Who likes to see a dusty room after a brain storming programming contest? After checking a bit he found that there is no brush in him room. So, he called Atiq to get a brush. But as usual Atiq refused to come. So, Tanvir decided to go to Atiq's house.
+Tanvir returned home from the contest and got angry after seeing his room dusty. Who likes to see a dusty room after
+a brain storming programming contest? After checking a bit he found that there is no brush in him room. So, he called
+Atiq to get a brush. But as usual Atiq refused to come. So, Tanvir decided to go to Atiq's house.
 
-The city they live in is divided by some junctions. The junctions are connected by two way roads. They live in different junctions. And they can go to one junction to other by using the roads only.
+The city they live in is divided by some junctions. The junctions are connected by two way roads. They live in different 
+junctions. And they can go to one junction to other by using the roads only.
 
-Now you are given the map of the city and the distances of the roads. You have to find the minimum distance Tanvir has to travel to reach Atiq's house.
+Now you are given the map of the city and the distances of the roads. You have to find the minimum distance Tanvir has 
+to travel to reach Atiq's house.
 
 Input
 Input starts with an integer T (≤ 100), denoting the number of test cases.
 
-Each case starts with a blank line. The next line contains two integers N (2 ≤ N ≤ 100) and M (0 ≤ M ≤ 1000), means that there are N junctions and M two way roads. Each of the next M lines will contain three integers u v w (1 ≤ u, v ≤ N, w ≤ 1000), it means that there is a road between junction u and v and the distance is w. You can assume that Tanvir lives in the 1st junction and Atiq lives in the Nth junction. There can be multiple roads between same pair of junctions.
+Each case starts with a blank line. The next line contains two integers N (2 ≤ N ≤ 100) and M (0 ≤ M ≤ 1000), means 
+that there are N junctions and M two way roads. Each of the next M lines will contain three 
+integers u v w (1 ≤ u, v ≤ N, w ≤ 1000), it means that there is a road between junction u and v and the 
+distance is w. You can assume that Tanvir lives in the 1st junction and Atiq lives in the Nth junction. 
+There can be multiple roads between same pair of junctions.
 
 Output
-For each case print the case number and the minimum distance Tanvir has to travel to reach Atiq's house. If it's impossible, then print 'Impossible'.
+For each case print the case number and the minimum distance Tanvir has to travel to reach Atiq's house. 
+If it's impossible, then print 'Impossible'.
 
 Sample Input
 Output for Sample Input
@@ -37,3 +46,81 @@ Case 2: Impossible
  
 
 PROBLEM SETTER: JANE ALAM JAN
+
+
+solution:
+
+
+#include <iostream>
+#include <bits/stdc++.h>
+#define PII pair<int , int> 
+
+using namespace std ;
+
+vector<PII>adj[10005] ;
+bool vis[10005] ;
+int dis[10005]  , n , m ;
+
+
+void dijkstra(int x)
+{
+    priority_queue <PII ,vector <PII> ,greater<PII>> q ;//for min heap
+    for(int i = 0 ; i <= n ;i++)dis[i]=200001;//for this the minimum value will be given priority
+    
+    dis[x] = 0;
+    q.push({0,x});
+    while (!q.empty()) 
+    {
+        int a = q.top().second; 
+        q.pop();
+
+        if (vis[a]) continue;
+            vis[a] = true;
+        for (auto u : adj[a]) 
+        {
+            int b = u.second, w = u.first;
+            
+            if (dis[a] + w < dis[b]) 
+            {
+            dis[b] = dis[a] + w ;
+            q.push({dis[b],b});
+            }
+        }
+    }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t ;
+    cin >> t;
+    for(int i = 0 ; i  < t ;i++)//no of test
+    {
+        cin >> n >> m ;
+        for(int i =0 ; i < m ; i++)
+        {
+            int u , v, w ;
+            cin >> u >> v >> w ;
+            adj[u].push_back({w , v}) ;
+            adj[v].push_back({w , u}) ;
+
+        }
+        dijkstra(1) ;
+        cout<<"Case "<<i+1<<": ";
+        if(dis[n]==200001)cout << "Impossible" << endl ;//if its not visited which means it is not connected
+        else cout << dis[n] << endl;
+        for(int i = 0 ; i <= n ;i++)
+        {
+            adj[i].clear();
+            
+        }
+        memset(dis, 0 , sizeof dis) ;
+        memset(vis , false , sizeof vis) ;
+    }
+    return 0 ;
+}
+
+
+
+                 THE END
