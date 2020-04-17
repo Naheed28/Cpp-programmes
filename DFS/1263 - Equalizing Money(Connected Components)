@@ -1,0 +1,144 @@
+There are n people in a certain village. Each of them contains some amount of money. One day a wise person told them 
+to distribute the money such that everyone has equal amount of money. If they can do so, they will be favored by their fortunes.
+
+You are given the information about the money of each person and some relations. Each relation is of the form u v. 
+That means person u and v are capable of making money transactions. They are allowed to use transactions any number 
+of times but they have to do integer transactions only.
+
+Now your task is to answer whether they can redistribute the money such that each of them contains exactly same of 
+money.
+
+Input
+Input starts with an integer T (≤ 100), denoting the number of test cases.
+
+Each case starts with a line containing an integer n (2 ≤ n ≤ 1000) and m (0 ≤ m ≤ 10000) where m denotes the 
+number of relations. The next line contains n space separated integers ranging from 0 to 1000. The ith integer
+of this line denotes the money for the ith person. Each of the next m lines contains two integers 
+u v (1 ≤ u, v ≤ n, u ≠ v) meaning that person u and v can make transactions. No relation is reported more than once.
+
+Output
+For each case, print the case number and 'Yes' if they can equalize their money or 'No' otherwise.
+
+Sample Input:
+
+3
+5 4
+1 0 1 1 2
+1 2
+2 3
+3 4
+4 5
+
+2 1
+5 10
+1 2
+
+4 2
+1 1 0 2
+1 2
+2 3
+
+Output:
+
+Case 1: Yes
+
+Case 2: No
+
+Case 3: No
+
+Note
+Dataset is huge, use faster I/O methods.
+
+PROBLEM SETTER: JANE ALAM JAN
+
+
+
+Idea:see if the connected components contain equal money
+Solution:
+
+#include<bits/stdc++.h>
+
+using namespace std ;
+
+bool vis[10000];
+vector <int> adj [10000];
+int cnt ,cost ,avg ;
+
+int n , m ;
+int arr[10000];
+
+
+void dfs( int u ) 
+{
+    if(vis[u]) 
+        return;
+    vis[u] = true;
+    
+    cnt++;              //no of components
+    cost += arr[u];     //total cost of components
+    
+    for(int j = 0 ; j < adj[u].size() ;j++)
+    {
+        int v = adj[u][j] ;
+        if(vis[v] == false) 
+            dfs(v) ;
+    }
+}
+
+
+
+int main()
+{
+
+    
+    int t;
+    cin>>t;
+    for(int i = 0 ; i < t ;i++)
+    {
+        int total = 0 ;
+        cin >> n >> m ;
+        for(int i = 0 ; i < n ;i++)
+        {
+            cin >> arr[i] ;
+            total += arr[i];
+            adj[i].clear();
+        }
+        for(int i = 0 ; i < m ;i++)
+        {
+            int u , v ;
+            cin >> u >> v ;
+            u--,v-- ;
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        printf("Case %d: ",i+1);
+        bool flag=true;
+        avg = total/n;
+        
+        if(total%n)
+            flag=false;
+        else
+        {   
+            for(int i = 0; i < n ;i++)//searching every node
+            {
+                cnt = 0 ;
+                cost = 0 ;
+                if(!vis[i])
+                {
+                    dfs(i);
+                    if(cnt * avg !=cost)
+                    {
+                        flag=false;
+                        break;
+                    }
+                }
+            }
+        }
+        printf("%s\n", flag ? "Yes" : "No");
+        memset(vis , 0 ,sizeof vis) ;
+        flag = true ;
+
+    }
+
+    return 0 ;
+}
