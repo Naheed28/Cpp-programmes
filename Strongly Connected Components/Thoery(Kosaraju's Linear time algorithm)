@@ -1,0 +1,82 @@
+Read the book -> hackerEarth -> then the solution
+
+
+#include <iostream>
+#include<bits/stdc++.h>
+
+using namespace std ;
+
+vector <int> adj1[100005];
+vector <int> adj2[100005];//for reverse adjacency list
+
+bool vis[100005] ;
+int components[100005];
+
+int cnt = 0 ;
+stack <int> s;
+
+int node , edges ;
+
+void dfs1 (int v) 
+{
+    vis[v] = true;
+    for (int i=0; i<adj1[v].size(); ++i)
+        if (!vis[ adj1[v][i] ])
+            dfs1 (adj1[v][i]);
+    s.push(v);//node with the largest finishing time will be saved on top
+}
+
+void dfs2 (int v , int cnt) 
+{
+    vis[v] = true;
+	  components[v] = cnt ;//marking the components according to its strongly connected group
+	
+    for (int i=0; i<adj2[v].size(); ++i)
+        if (!vis[ adj2[v][i] ])
+            dfs2 (adj2[v][i] , cnt);
+}
+
+int main()
+{
+	cin >> node >>edges ;
+	for(int i = 0 ; i < edges ;i++)
+	{
+		int u , v ;
+		cin >> u >> v ;
+
+		adj1[u].push_back(v) ;
+		adj2[v].push_back(u) ;
+	}
+
+	for(int i = 1 ; i <= node ;i++)
+	{
+		if(!vis[i])
+			dfs1(i);
+	}
+
+	memset(vis , false ,sizeof vis) ;//reseting the vis for later use
+	
+	while (!s.empty())
+	{
+		  int u = s.top();
+		  s.pop();
+
+		  if(vis[u]==false)
+		  {
+			  cnt++;
+			  dfs2(u , cnt);
+		  }
+	}
+
+	
+	
+	for(int i = 1 ; i <= node ;i++)
+	{
+		cout << components[i]<<" " ;//printing the components group
+	}
+
+
+
+
+	return 0 ;
+}
