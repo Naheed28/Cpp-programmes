@@ -1,0 +1,86 @@
+After IOI Ilya decided to make a business. He found a social network called "TheScorpyBook.com". It currently has N 
+registered users. As in any social network two users can be friends. Ilya wants the world to be as connected 
+as possible, so he wants to suggest friendship to some pairs of users. He will suggest user u to have a friendship
+with user v if they are not friends yet and there is a user w who is friends of both of them. Note that u, v and w
+are different users. Ilya is too busy with IPO these days, so he asks you to count how many friendship suggestions
+he has to send over his social network.
+
+Input
+The first line contains an integer number N — the number of users in the network. Next N lines contain N characters
+each denoting friendship relations. jth character if the ith lines equals one, if users i and j are friends and equals
+to zero otherwise. This relation is symmetric, i.e. if user a is friend of b then b is also a friend of a.
+
+Output
+Output a single integer — number of friendship suggestions Ilya has to send.
+
+Constraints
+1 ≤ N ≤ 2000
+Example
+Input:
+4
+0111
+1000
+1000
+1000
+
+Output:
+6
+Explanation
+Each of users [2, 3, 4] should receive two friendship suggestions, while user 1 does not need any, since he 
+already has all other users in his friend-list.
+
+
+Hints:This question requires some insight , first of all we need to understand that  we need to send a suggestion 
+to only that user which has a distance
+of 2 . For this 
+(1)  we make an adjacency list of the given matrix
+(2) we traverse the list for all i starting from i=0 to n and search if i need to send a suggest a friend request 
+to j where j starts from i+1
+now for any user k that is adjacent to the present index i we just find if j is directly connected to the particular
+adjacent of i.  If it is then we increment the counter by 1 and break;
+
+
+Moreover floyed Warshall algo canbe used(but i dont know)
+
+Solution:
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+ 
+const int N = 2e3 + 2;
+ 
+char g[N][N];
+vector<int> adj[N];
+ 
+int main() {
+	int n;
+	scanf("%d", &n);
+	for (int i = 0; i < n; i++) {
+		scanf("%s", g[i]);
+	}
+	for (int i = 0; i < n ; i++) {
+		for (int j = i + 1; j < n; j++) {
+			if (g[i][j] == '1') {
+				adj[i].push_back(j);
+				adj[j].push_back(i);
+			}
+		}
+	}
+	int count = 0;
+	for (int i = 0; i < n ; i++) {
+		for (int j = i + 1; j < n; j++) {
+			if (g[i][j] == '0') {       // means not directly connected so need to send notification if mutual 
+				for (int v : adj[i]) {
+					if (g[i][v] == '1' && g[v][j] == '1') {/* i is connected with v and v is connected with j*/
+						count += 2;
+						break;
+					}
+				}
+			}
+		}
+	}
+	printf("%d", count);
+	return 0;
+}
