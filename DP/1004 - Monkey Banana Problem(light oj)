@@ -1,0 +1,139 @@
+You are in the world of mathematics to solve the great "Monkey Banana Problem". It states that
+, a monkey enters into a diamond shaped two dimensional array and can jump in any of the adjacent
+cells down from its current position (see figure). While moving from one cell to another, the monkey
+eats all the bananas kept in that cell. The monkey enters into the array from the upper part and goes 
+out through the lower part. Find the maximum number of bananas the monkey can eat.
+
+                    
+                    http://lightoj.com/data/problems/desc/1004/a.png                                        
+
+
+
+Input
+Input starts with an integer T (≤ 50), denoting the number of test cases.
+
+Every case starts with an integer N (1 ≤ N ≤ 100). It denotes that, there will be 2*N - 1 rows. 
+The ith (1 ≤ i ≤ N) line of next N lines contains exactly i numbers. Then there will be N - 1 lines. 
+The jth (1 ≤ j < N) line contains N - j integers. Each number is greater than zero and less than 215.
+
+Output
+For each case, print the case number and maximum number of bananas eaten by the monkey.
+
+Sample Input
+Output for Sample Input
+2
+4
+
+7
+6 4
+2 5 10
+9 8 12 2
+2 12 7
+8 2
+10
+
+2
+
+1
+2 3
+1
+
+Output:
+Case 1: 63
+Case 2: 5
+
+Note
+Dataset is huge, use faster I/O methods.
+
+
+
+Hint:https://mahadis.wordpress.com/2016/06/03/monkey-banana-problem-light-oj-1004/
+
+We will convert first convert it to matrix like this:
+7  0  0  0  0
+6  4  0  0  0
+2  5 10  0  0
+0  8  2  0  0
+0  0 10  0  0
+
+now we can go to [i+1, j] & [i+1, j+1] positions from [i,j] position 
+for whole input and so no need to handle as upper and lower portion of input.
+
+Then heres the dp matrix for better understanding:
+36  -1  -1  -1  -1
+29  27  -1  -1  -1
+20  23  22  -1  -1
+-1  18  12  -1  -1
+-1  -1  -1  -1  -1
+
+Solution:
+#include <iostream>
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int arr[250][250];
+int dp[250][250];
+int n, k;
+
+int collect(int i, int j)
+{
+	if (arr[i][j] == 0) return 0;       //base case
+	if (i == k - 1) return arr[i][j];   //base case
+
+	if(dp[i][j] != -1) return dp[i][j];  // checking if already calculated
+
+    int r1=0, r2=0;
+    r1 = arr[i][j]+collect(i+1,j);   // if go to the left child (peaking the tree)
+    r2 = arr[i][j]+collect(i+1,j+1); // if go to the right child (     ,,    )
+
+    dp[i][j] = max(r1,r2);         // saving the best result
+    return dp[i][j];               // returing the result
+}
+
+void print() //JUST FOR TESTING PURPOSE
+{
+	for (int i = 0; i < k; i++)
+	{
+		for (int j = 0; j < k; j++)
+			cout << arr[i][j] << "  ";
+		cout << endl;
+	}
+}
+
+int main()
+{
+	int t;
+	cin >> t;
+	for (int p = 0; p < t; p++) //for test cases
+	{
+
+		memset(dp, -1, sizeof(dp));
+        memset(arr, 0, sizeof(arr));
+		cin >> n;
+
+		//for the increasing  upper portion
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j <= i; j++)
+				cin >> arr[i][j];
+		}
+
+		k = n * 2 - 1;
+
+		int l = 1;
+		for (int i = n; i < k; i++)
+		{
+			for (int j = l; j < n; j++)
+				cin >> arr[i][j];
+			l++;
+		}
+
+		printf("Case %d: %d\n", p + 1, collect(0, 0));
+
+		//print();
+	}
+
+	return 0;
+}
+
