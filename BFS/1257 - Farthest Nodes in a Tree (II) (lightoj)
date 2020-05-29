@@ -147,14 +147,9 @@ void BFS(int start, vector<pair<int, int> > v[], vector <int> &dis)
                 q.push(v[u][i].first);
                 vis[v[u][i].first] = 1;
                 dis[v[u][i].first] = dis[u]  +  v[u][i].second; //adding the weight
- 
- 
             }
- 
         }
- 
     }
- 
 }
  
  
@@ -180,12 +175,7 @@ int main()
             v[a2].pb({a1,w});
  
         }
- 
- 
-  
- 
- 
- 
+
         bfs( 0 , v ); //first bfs to find the farthest node
     
         Max=-1;
