@@ -86,14 +86,14 @@ Case 4: 13
 
 using namespace std ;
 int dx[] = {-1 ,0 ,1 ,0 };
-int dy[] = {0 , 1 ,0 ,-1};//direction array 
+int dy[] = {0 , 1 ,0 ,-1};//directional array for movement
 
 int cnt = 0 ;
 int row = 0 , coloumn = 0 ;
 
 char vis[22][22] ;
 
-void display()
+void display()//for testing purpose
 {
     for(int i = 0 ; i < row ;i++)
     {
@@ -119,13 +119,12 @@ void bfs(int x  ,int y )
 
         for(int i = 0 ; i < 4 ;i++)
         {
-            int tx = v.first + dx[i] ;//for temporary neighbour cell ;
+            int tx = v.first + dx[i] ;//for temporaryly storing neighbour cell cordinates ;
             int ty = v.second +dy[i] ;
 
             if(vis[tx][ty] != '1' && vis[tx][ty] != '#' && tx < row and tx >= 0 and ty < coloumn and ty >= 0 )
             {
                 vis[tx][ty] = '1' ; //if not visited then 1
-            
                 cnt++ ;
                 q.push(make_pair(tx , ty)) ;
             }
@@ -144,8 +143,6 @@ int main()
         if(row == 0 and coloumn == 0)break;
         memset(vis , 0 ,sizeof(vis)) ;
         memset(d , 0 ,sizeof(d)) ;
-        
-
 
         int startx , starty ; //for starting node
         for(int i = 0 ; i < row ;i++)
@@ -153,7 +150,7 @@ int main()
             for(int j = 0 ; j <coloumn ;j++)
             {
                 cin >> vis[i][j] ;   //inserting the values
-                if(vis[i][j] == '@')
+                if(vis[i][j] == '@') //for extracting the starting position
                 {
                     startx = i ;
                     starty = j ;
@@ -164,17 +161,16 @@ int main()
         bfs(startx ,starty) ;
         printf("Case %d: %d\n",i+1 ,cnt+1) ;
         cnt = 0 ;
-
-
         
-
         //display() ;
     }
-
     return 0 ;
 }
 
-                                                              The End
+
+---------------------------------------------------------------The End---------------------------------------------------------
+
+                                                
 
 
 
