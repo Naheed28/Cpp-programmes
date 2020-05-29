@@ -114,10 +114,6 @@ bool isBipartite(int src)
 				
         } 
     } 
-
-
-	
-  
     // If we reach here, then all adjacent   
     // vertices can be colored with alternate color 
     return true; 
@@ -125,12 +121,12 @@ bool isBipartite(int src)
 
 bool isbicolorable()//since it can contain multiple graph
 {
-    for(int i = 1 ; i<= nodes ; i++)
+    	for(int i = 1 ; i<= nodes ; i++)
 	{
-        if(color[i] == -1 && isBipartite(i) == false)
-            return false;
-    }
-    return true;
+        	if(color[i] == -1 && isBipartite(i) == false)
+            		return false;
+    	}
+    	return true;
 }
 
 void clr()//for clearing everything
@@ -155,36 +151,28 @@ int main()
 			for(int j = 1 ; j <= a ;j++)//since its 1 based
 			{
 				int b ;
-			
 				cin >> b ;
 				G[i][b] = G[b][i] = 1 ;
 			}
-		
 		}
-
 		printf("Case %d: ",i+1) ;
 
 		memset(color , -1 , sizeof color) ;//setting color to -1
 
 		if(isbicolorable())
 		{
-            int count=0;
-            for(int i = 1 ; i <= nodes ; i++)
-                if(color[i] == 1)
-                    count++;
-            if(count > nodes-count) 
+            		int count=0;
+            		for(int i = 1 ; i <= nodes ; i++)
+                		if(color[i] == 1)
+                    			count++;
+            		if(count > nodes-count) 
 				count = nodes - count ;
             
 			cout<<"1 "<<count<<" "<<nodes-count<<endl;
-        }
-        else
-            cout<<"0 0 0"<<endl;
-        
-
-
+        	}
+        	else
+            	cout<<"0 0 0"<<endl;
 		clr();
-		
-
 	}
 	return 0 ;
 }
