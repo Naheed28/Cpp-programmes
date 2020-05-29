@@ -7,20 +7,22 @@ Bubbles, she is the joy and the laughter;
 
 Buttercup, she is the toughest fighter.
 
-These super girls defend Townsville from monsters and super villains using their super powers, intelligence. They live in a home in 
-Townsville with the professor who is like their father.
-The girls are young now and they don't like to fight the monsters anymore. So, if they are outside their home, they are found shopping. 
-And when they get back to home, they simply watch the TV serials. It's such a horrible fact that the super intelligent girls are 
-wasting their time watching serials that consist of the rivalries between Wives and their Mother in Laws. And when they use computers 
-they are usually found using the facenote (a dangerous1 social networking site).
+These super girls defend Townsville from monsters and super villains using their super powers, intelligence. 
+They live in a home in Townsville with the professor who is like their father.
+The girls are young now and they don't like to fight the monsters anymore. So, if they are outside their home,
+they are found shopping. And when they get back to home, they simply watch the TV serials. It's such a horrible fact 
+that the super intelligent girls are wasting their time watching serials that consist of the rivalries between Wives 
+and their Mother in Laws. And when they use computers they are usually found using the 
+facenote (a dangerous1 social networking site).
 
-So, such wonderful girls just became lazy and useless. Often they are seen fighting each other, the comments that can be heard, 
-are like, 'Tulsi is the best.', 'Gopi is better than Rashee.' The professor is quite upset with the girls, and he can't even watch 
-any science show or sports because of these irritating serials.
+So, such wonderful girls just became lazy and useless. Often they are seen fighting each other, the 
+comments that can be heard, are like, 'Tulsi is the best.', 'Gopi is better than Rashee.' The professor 
+is quite upset with the girls, and he can't even watch any science show or sports because of 
+these irritating serials.
 
-So, the professor made a plan and asked the girls to go for shopping such that he can watch an important science show in the TV. 
-The girls became very excited and they went out for shopping. But soon they realize that one of their favorite serials will start soon, 
-and they need to get back home for that serial.
+So, the professor made a plan and asked the girls to go for shopping such that he can watch an important
+science show in the TV. The girls became very excited and they went out for shopping. But soon they realize 
+that one of their favorite serials will start soon, and they need to get back home for that serial.
 
 To be more specific let's consider the city as a 2D grid. In the grid there are some symbols, the meaning of them are:
 
@@ -45,12 +47,14 @@ Now you are given the information of the city and their positions. You have to f
 
 Input
 Input starts with an integer T (≤ 100), denoting the number of test cases.
-Each case starts with a line containing two integers: m and n (4 ≤ m, n ≤ 20), m denotes the number of rows and n denotes the number of columns of the modeled grid. Each of the next m lines contains n characters representing the city.
+Each case starts with a line containing two integers: m and n (4 ≤ m, n ≤ 20), m denotes the number of rows
+and n denotes the number of columns of the modeled grid. Each of the next m lines contains n characters representing the city.
 
 You can assume that 'a', 'b', 'c', 'h' will occur exactly once in the grid. The outer boundaries will always be marked by '#'.
 
 Output
-For each case, print the case number and the minimum time needed when they all are in their home. You can assume that a solution will always exist.
+For each case, print the case number and the minimum time needed when they all are in their home. You can assume that a
+solution will always exist.
 
 Sample Input
 2
@@ -95,7 +99,7 @@ Case 2: 4
 
 using namespace std ;
 int dx[] = {-1 ,0 ,1 ,0 };
-int dy[] = {0 , 1 ,0 ,-1};//direction array 
+int dy[] = {0 , 1 ,0 ,-1};//directional array 
 
 
 int row = 0 , coloumn = 0 ;
@@ -103,7 +107,7 @@ int row = 0 , coloumn = 0 ;
 char vis[22][22] ;
 int d[22][22] ; //distance from home
 
-void display()
+void display()//for testing purpose
 {
     for(int i = 0 ; i < row ;i++)
     {
@@ -129,7 +133,7 @@ void bfs(int x  ,int y )
 
         for(int i = 0 ; i < 4 ;i++)
         {
-            int tx = v.first + dx[i] ;//for temporary neighbour cell ;
+            int tx = v.first + dx[i] ;//for storing neighbour cells temporarily ;
             int ty = v.second +dy[i] ;
 
             if(vis[tx][ty] != '1' && vis[tx][ty] != 'm' && vis[tx][ty] != '#' && tx < row and tx >= 0 and ty < coloumn and ty >= 0 )
@@ -155,8 +159,6 @@ int main()
         memset(vis , 0 ,sizeof(vis)) ;
         memset(d , 0 ,sizeof(d)) ;
         
-
-
         int homex , homey ; //for starting node home
         int ax , ay ; //denotes the position of Blossom
         int bx , by ; //denotes the position of Bubbles
@@ -197,12 +199,12 @@ int main()
         cnt  = max(d[ax][ay] , max(d[bx][by],d[cx][cy])) ;//max distance from the three
         printf("Case %d: %d\n",i+1 ,cnt) ;
         cnt = 0 ;
-
-
         
-
         //display() ;
     }
 
     return 0 ;
 }
+
+
+---------------------------------------------------------The End-------------------------------------------------------
