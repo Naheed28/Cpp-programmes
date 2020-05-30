@@ -40,6 +40,7 @@ by giving this task as a long contest problem.
 
 Now, he is asking you to write a program to identify the most popular friend among all the friends in each group.
 Also, our smart cook wants to know the average distance of everyone from the most popular friend.
+
 Input
 Friends in a group are labelled with numbers to hide their Facebook identity. The first line of input contains
 the number of groups in which users are divided. First line of each group contains the number of friends that
