@@ -15,11 +15,14 @@ int dis[10005]  , n , m ;
 
 void dijkstra(int x)
 {
-    priority_queue <PII ,vector <PII> ,greater<PII>> q ;//for min heap
+    //for min heap .It will take the smallest weight first
+    priority_queue <PII ,vector <PII> ,greater<PII>> q ;
+
+    //here INT_MAX can also be set
     for(int i = 0 ; i <= n ;i++)dis[i]=200001;//for this the minimum value will begiven priority
     
-    dis[x] = 0;
-    q.push({0,x});//saving the weight in the first position because of the priority_queue
+    dis[x] = 0;       //setting the initial distance to zero
+    q.push({0,x});    //saving the weight in the first position because of the priority_queue
     while (!q.empty()) 
     {
         int a = q.top().second; 
@@ -33,8 +36,8 @@ void dijkstra(int x)
             
             if (dis[a] + w < dis[b]) 
             {
-            dis[b] = dis[a] + w ;
-            q.push({dis[b],b});
+            	dis[b] = dis[a] + w ;
+            	q.push({dis[b],b});
             }
         }
     }
@@ -45,18 +48,18 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
-    cin >> n >> m ;
-    for(int i =0 ; i < m ; i++)
+    cin >> n >> m ;			// n = nodes , m = edges
+    for(int i = 0 ; i < m ; i++)
     {
         int u , v, w ;
         cin >> u >> v >> w ;
-        adj[u].push_back({w , v}) ;
+        adj[u].push_back({w , v}) ;     //pushing the weight at the left inorder to be sorted
         adj[v].push_back({w , u}) ;
 
     }
-    dijkstra(1) ;
+    dijkstra(1) ;			//distance from source node ie. 1
         
-    if(dis[n]==200001)cout << "Impossible" << endl; //if its is not visited or connected
+    if(dis[n]==200001)cout << "Impossible" << endl; //if the node is not visited or connected
     else cout << dis[n] << endl;
     return 0 ;
 }
