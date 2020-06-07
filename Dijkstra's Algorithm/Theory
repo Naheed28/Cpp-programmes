@@ -18,9 +18,12 @@ void dijkstra(int x)
     //for min heap .It will take the smallest weight first
     priority_queue <PII ,vector <PII> ,greater<PII>> q ;
 
+
     //here INT_MAX can also be set
-    for(int i = 0 ; i <= n ;i++)dis[i]=200001;//for this the minimum value will begiven priority
-    
+    //for this the minimum value will begiven priority
+    for(int i = 0 ; i <= n ;i++)dis[i]=200001;  
+
+
     dis[x] = 0;       //setting the initial distance to zero
     q.push({0,x});    //saving the weight in the first position because of the priority_queue
     while (!q.empty()) 
