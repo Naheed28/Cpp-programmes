@@ -1,36 +1,34 @@
-K people are having a picnic. They are initially in N cities, conveniently numbered from 1 to N. The roads between cities are connected
-by M one-way roads (no road connects a city to itself).
+K people are having a picnic. They are initially in N cities, conveniently numbered 
+from 1 to N. The roads between cities are connected by M one-way roads 
+(no road connects a city to itself).
 
-Now they want to gather in the same city for their picnic, but (because of the one-way roads) some people may only be able to
-get to some cities. Help them by figuring out how many cities are reachable by all of them, and hence are possible picnic locations.
+Now they want to gather in the same city for their picnic, but (because of the one-way roads) 
+some people may only be able to get to some cities. Help them by figuring out how many 
+cities are reachable by all of them, and hence are possible picnic locations.
 
 Input
 Input starts with an integer T (≤ 10), denoting the number of test cases.
 
-Each case starts with three integers K (1 ≤ K ≤ 100), N (1 ≤ N ≤ 1000), M (1 ≤ M ≤ 10000). Each of the next K lines will contain 
-an integer (1 to N) denoting the city where the ith person lives. Each of the next M lines will contain two
+Each case starts with three integers K (1 ≤ K ≤ 100), N (1 ≤ N ≤ 1000), M (1 ≤ M ≤ 10000). 
+Each of the next K lines will contain an integer (1 to N) denoting the city where the ith 
+person lives. Each of the next M lines will contain two
 integers u v (1 ≤ u, v ≤ N, u ≠ v) denoting there is a road from u to v.
 
 Output
-For each case, print the case number and the number of cities that are reachable by all of them via the one-way roads.
+For each case, print the case number and the number of cities that are reachable by all 
+of them via the one-way roads.
 
 Sample Input
-Output for Sample Input
 1
-
 2 4 4
-
 2
-
 3
-
 1 2
-
 1 4
-
 2 3
-
 3 4
+
+Output:
 
 Case 1: 2
 
@@ -40,13 +38,16 @@ SPECIAL THANKS: JANE ALAM JAN (DESCRIPTION, SOLUTION, DATASET)
 
 
 
+hint:Now if a city contains more than k people then ,it means that it is 
+visitable by all. That means its a good picnic spot..
 
-                  solution
+
+Solution:
+
 #include <bits/stdc++.h>
+#define N 1005
+
 using namespace std;
-#define N 1005 
-
-
 
 vector <int> adj[1005] ;   //Vector for maintaining adjacency list explained above 
 
@@ -90,7 +91,7 @@ int main()
 	int inc;
 	scanf("%d", &t);
 
-	for (int cs = 1; cs <= t; cs++) {
+	for (int cs = 1; cs <= t; cs++) {//for test cases
 		scanf("%d", &k);
 		scanf("%d", &n);
 		scanf("%d", &m);
@@ -133,3 +134,5 @@ int main()
 		clear() ;
 	}
 }
+
+------------------------------------------------The End---------------------------------------

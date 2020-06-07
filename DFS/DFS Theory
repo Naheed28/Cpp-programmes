@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+const int M = 1e5 + 8;
+vector <int> adj[M]; //a kind of two dimentional vector
+bool vis[M];
+
+void dfs(int s){
+    vis[s] = true;
+    for(int i = 0; i < adj[s].size(); i++)
+    {
+        int v = adj[s][i];
+        if(!vis[v]) dfs(v);//if not visited then do dfs
+    }
+}
+
+int main()
+{
+    int n, m;
+
+    cin >> n >> m; //n = node , m = edges
+    for(int i = 0; i < m; i++){
+        int x, y;
+        cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    int src, des;
+    cin >> src >> des;
+    dfs(src);
+    if(vis[des])
+        cout << "there is a path exist" << endl;
+    else cout << "no path exist" << endl;
+    return 0;
+}
