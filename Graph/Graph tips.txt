@@ -1,0 +1,3 @@
+
+Tip1 :
+It can be proved every graph with n nodes and k connected components have at least n-k edges.

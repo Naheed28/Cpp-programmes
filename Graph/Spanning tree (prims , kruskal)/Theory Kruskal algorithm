@@ -10,7 +10,9 @@ read your notebook for further details
 #include <algorithm>
  
 using namespace std;
+
 const int MAX = 1e4 + 5;
+
 int id[MAX], nodes, edges;
 pair <long long, pair<int, int> > p[MAX];
  
@@ -24,7 +26,7 @@ int root(int x)
 {
     while(id[x] != x)
     {
-        id[x] = id[id[x]];
+        id[x] = id[id[x]];  //i dont know why this line is needed
         x = id[x];
     }
     return x;
@@ -47,6 +49,7 @@ long long kruskal(pair<long long, pair<int, int> > p[])
         x = p[i].second.first;
         y = p[i].second.second;
         cost = p[i].first;
+
         // Check if the selected edge is creating a cycle or not
         if(root(x) != root(y))
         {
@@ -66,7 +69,7 @@ int main()
     for(int i = 0;i < edges;++i)
     {
         cin >> x >> y >> weight;
-        p[i] = make_pair(weight, make_pair(x, y));
+        p[i] = make_pair(weight, make_pair(x, y));  //we have to sort according to weight
     }
     // Sort the edges in the ascending order
     sort(p, p + edges);
