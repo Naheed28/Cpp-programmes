@@ -1,0 +1,115 @@
+A histogram is a polygon composed of a sequence of rectangles aligned at a common base line.
+The rectangles have equal widths but may have different heights. For example, the figure shows 
+the histogram that consists of rectangles with the heights 2, 1, 4, 5, 1, 3, 3 measured in units 
+where the width of the rectangles is 1.
+
+
+
+Usually, histograms are used to represent discrete distributions, e.g., the frequencies of 
+characters in texts. Note that the order of the rectangles, i.e., their heights, is important. 
+Calculate the area of the largest rectangle in a histogram that is aligned at the common base 
+line, too. The figure on the right shows the largest aligned rectangle for the depicted histogram.
+
+Input
+Input starts with an integer T (≤ 20), denoting the number of test cases.
+
+Each case contains a line with an integer N (1 ≤ N ≤ 30000) denoting the number of rectangles. 
+The next line contains N space separated positive integers (≤ 30000) denoting the heights.
+
+Output
+For each case, print the case number and the largest rectangle that can be made.
+
+Sample Input
+Output for Sample Input
+2
+
+7
+
+2 1 4 5 1 3 3
+
+5
+
+4 4 3 2 4
+
+Case 1: 8
+
+Case 2: 10
+
+Note
+Dataset is huge; use faster I/O methods.
+
+
+
+
+Solution :
+
+
+Tips:https://www.geeksforgeeks.org/largest-rectangle-under-histogram/
+
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int hist[30005];
+
+int getMaxArea(int hist[], int n)
+{
+    //for storing the indexes
+    stack<int> s;
+
+    int max_area = 0;  // Initialize max area
+    int tp;            // To store top of stack
+    int area_with_top; // To store area with top bar
+
+    //running through all bars of given histogram
+    int i = 0;
+    while (i < n)
+    {
+        if (s.empty() || hist[s.top()] <= hist[i])
+            s.push(i++);
+
+        else
+        {
+            tp = s.top();
+            s.pop();
+
+            //calculating the area
+            area_with_top = hist[tp] * (s.empty() ? i : i - s.top() - 1);
+
+            //storing the max area
+            max_area = max(max_area, area_with_top);
+        }
+    }
+
+    //now we have to manually calculate the ramaining area which were tracked
+    while (s.empty() == false)
+    {
+        tp = s.top();
+        s.pop();
+        area_with_top = hist[tp] * (s.empty() ? i : i - s.top() - 1);
+
+        //storing the max area
+        max_area = max(max_area, area_with_top);
+    }
+
+    return max_area;
+}
+
+int main()
+{
+
+    int t;
+    cin >> t;
+    for (int i = 1; i <= t; i++)
+    {
+        int n;
+        cin >> n;
+        for (int i = 0; i < n; i++)
+            cin >> hist[i];
+
+        printf("Case %d: %d\n", i, getMaxArea(hist, n));
+    }
+
+    return 0;
+}
