@@ -98,37 +98,59 @@ Solution:
 
 using namespace std;
 
+/// Typedef
+typedef long long ll;
+
+
 int main()
 {
-    int i, test, j, len;
-    char expression[150];
-    scanf("%d\n", &test);
-    for (i = 1; i <= test; i++)
+    
+    ll tc, t = 1;
+    cin >> tc ;
+
+    for (t = 1; t <= tc; t++)
     {
-        stack<char> mystack;
-        cin.getline(expression, 150);
-        len = strlen(expression);
-        if (len == 0)
+
+        printf("Case %lld:\n", t);
+        stack<string> stback, stforward;
+        stback.push("http://www.lightoj.com/");
+
+        while (1)
         {
-            printf("Yes\n");
-            continue;
-        }
-        for (j = 0; j < len; j++)
-        {
-            if (expression[j] == '(' || expression[j] == '[')
-                mystack.push(expression[j]);
-            else if (!mystack.empty() && ((mystack.top() == '(') && (expression[j] == ')') || (mystack.top() == '[') && expression[j] == ']'))
-                mystack.pop();
-            else if (expression[j] == ' ')
-                continue;
+            string arr, now;
+            cin >> arr;
+            if (arr == "VISIT")
+            {
+                cin >> now;
+                stback.push(now);
+                cout << stback.top() << endl;
+                while (!stforward.empty())
+                    stforward.pop();
+            }
+            else if (arr == "BACK")
+            {
+                if (stback.size() <= 1)
+                    cout << "Ignored" << endl;
+                else
+                {
+                    stforward.push(stback.top());
+                    stback.pop();
+                    cout << stback.top() << endl;
+                }
+            }
+            else if (arr == "FORWARD")
+            {
+                if (stforward.empty())
+                    cout << "Ignored" << endl;
+                else
+                {
+                    stback.push(stforward.top());
+                    stforward.pop();
+                    cout << stback.top() << endl;
+                }
+            }
             else
                 break;
         }
-
-        if (mystack.empty() && len == j)
-            printf("Yes\n");
-        else
-            printf("No\n");
     }
-    return 0;
 }
