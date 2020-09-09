@@ -1,0 +1,86 @@
+
+Time Limit: 2 second(s)	Memory Limit: 32 MB
+You are given N sticks having distinct lengths; you have to form some triangles
+using the sticks. A triangle is valid if its area is positive. Your task is to find the 
+number of ways you can form a valid triangle using the sticks.
+
+Input
+Input starts with an integer T (≤ 10), denoting the number of test cases.
+
+Each case starts with a line containing an integer N (3 ≤ N ≤ 2000). The next line contains N integers denoting the lengths of the sticks. You can assume that the lengths are distinct and each length lies in the range [1, 109].
+
+Output
+For each case, print the case number and the total number of ways a valid triangle can be formed.
+
+Sample Input
+```
+3
+
+5
+
+3 12 5 4 9
+
+6
+
+1 2 3 4 5 6
+
+4
+
+100 211 212 121
+
+```
+sample output:
+```
+Case 1: 3
+
+Case 2: 7
+
+Case 3: 4
+```
+
+
+hint : So we sort the array of lengths. Then We pick two sticks(a,b) , 
+And find the index(i) which length is less than a + b ,
+So this all length within this index satisfy triangle property.
+
+
+Solution:
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+int arr[100005];
+
+int main()
+{
+
+    int tc, cs = 0, n, ans;
+    cin >> tc;
+    while (tc--)
+    {
+        cin >> n;
+        for (int i = 0; i < n; i++)
+            cin >> arr[i];
+
+        sort(arr, arr + n);
+        int i, L, R;
+
+        ans = 0;
+        for (i = 0; i < n; i++)
+        {
+            L = 0;
+            for (R = i - 1; R > 0; R--)
+            {
+                while (L < R && arr[L] + arr[R] <= arr[i])
+                    L++;
+                if (L >= R)
+                    break;
+                ans += R - L;
+            }
+        }
+
+        printf("Case %d: %d\n", ++cs, ans);
+    }
+    return 0;
+}
+```

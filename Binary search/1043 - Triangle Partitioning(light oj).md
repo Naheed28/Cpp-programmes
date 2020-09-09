@@ -1,0 +1,66 @@
+See the picture below.
+
+
+
+You are given AB, AC and BC. DE is parallel to BC. You are also given the area ratio 
+between ADE and BDEC. You have to find the value of AD.
+
+Input
+Input starts with an integer T (≤ 25), denoting the number of test cases.
+
+Each case begins with four real numbers denoting AB, AC, BC and the ratio of ADE and 
+BDEC (ADE / BDEC). You can safely assume that the given triangle is a valid triangle with 
+positive area.
+
+Output
+For each case of input you have to print the case number and AD. Errors less than 10-6 will be 
+ignored.
+
+Sample Input:
+4
+
+100 100 100 2
+
+10 12 14 1
+
+7 8 9 10
+
+8.134 9.098 7.123 5.10
+
+
+Output :
+Case 1: 81.6496580
+
+Case 2: 7.07106781
+
+Case 3: 6.6742381247
+
+Case 4: 7.437454786
+
+
+
+hint:Let, Area of ADE = m and Area of BDEC = n, so Area of ABC = m+n;
+
+Then, AD = sqrt(m/(m+n)) * AB;
+
+
+```
+#include<bits/stdc++.h>
+using namespace std;
+
+ 
+int main()
+{
+    int tn, cn=0;
+    scanf("%d", &tn);
+    while(tn--)
+    {
+        double ab, ac, bc, r;
+        scanf("%lf%lf%lf%lf", &ab, &ac, &bc, &r);
+ 
+        double ad = sqrt(r/(r+1))*ab;
+        printf("Case %d: %.10lf\n", ++cn, ad);
+    }
+    return 0;
+}
+``` 
