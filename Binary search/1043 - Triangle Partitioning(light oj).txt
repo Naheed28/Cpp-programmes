@@ -44,7 +44,7 @@ hint:Let, Area of ADE = m and Area of BDEC = n, so Area of ABC = m+n;
 Then, AD = sqrt(m/(m+n)) * AB;
 
 
-```
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -63,4 +63,3 @@ int main()
     }
     return 0;
 }
-``` 
