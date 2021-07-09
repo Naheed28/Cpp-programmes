@@ -1,7 +1,7 @@
-- https://www.hackerearth.com/blog/developers/kruskals-minimum-spanning-tree-algorithm-example/
-
-- visit this site for further details
-
+Prerequisites:
+- Understand Union Find (Disjoint set)https://youtu.be/0jNmHPfA_yE
+- Basic understanding of Kruskal algo. https://youtu.be/JZBQLXgSGfs
+- visit this site for details https://www.hackerearth.com/blog/developers/kruskals-minimum-spanning-tree-algorithm-example/
 - read your notebook for further details
 
 ```cpp
