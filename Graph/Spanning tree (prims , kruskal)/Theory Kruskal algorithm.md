@@ -1,6 +1,8 @@
-https://www.hackerearth.com/blog/developers/kruskals-minimum-spanning-tree-algorithm-example/
-visit this site for further details
-read your notebook for further details
+- https://www.hackerearth.com/blog/developers/kruskals-minimum-spanning-tree-algorithm-example/
+
+- visit this site for further details
+
+- read your notebook for further details
 
 ```cpp
 
