@@ -2,7 +2,7 @@ https://www.hackerearth.com/blog/developers/kruskals-minimum-spanning-tree-algor
 visit this site for further details
 read your notebook for further details
 
-
+```cpp
 
 #include <iostream>
 #include <vector>
@@ -77,3 +77,5 @@ int main()
     cout << minimumCost << endl;
     return 0;
 }
+
+```
