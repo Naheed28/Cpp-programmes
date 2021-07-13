@@ -17,15 +17,7 @@ Check for cycles. To do that, mark the nodes which have been already selected an
 Queue that are not marked.
 Consider the example below:
 
-enter image description here
-https://he-s3.s3.amazonaws.com/media/uploads/16597fe.jpg
 
-In Prim’s Algorithm, we will start with an arbitrary node (it doesn’t matter which one) and mark it. In each iteration we 
-will mark a new vertex that is adjacent to the one that we have already marked. As a greedy algorithm, Prim’s algorithm 
-will select the cheapest edge and mark the vertex. So we will simply choose the edge with weight 1. In the next iteration
-we have three options, edges with weight 2, 3 and 4. So, we will select the edge with weight 2 and mark the vertex. Now again 
-we have three options, edges with weight 3, 4 and 5. But we can’t choose edge with weight 3 as it is creating a cycle. So we
-will select the edge with weight 4 and we end up with the minimum spanning tree of total cost 7 ( = 1 + 2 +4).
 
 Implementation:with adjacency list
 
@@ -71,8 +63,6 @@ int prim(int x)
         }
 	}
 	return minimumCost ;
-
-
 }
 
 
@@ -97,15 +87,6 @@ int main()
 	int minimumCost = prim(1) ;
 	cout << minimumCost <<endl ;
 	return 0 ;
-
-
-
-	return 0 ;
 }
 
 ```
-
-
-                                          The End
-
-
