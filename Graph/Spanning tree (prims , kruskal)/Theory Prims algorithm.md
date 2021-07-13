@@ -29,7 +29,7 @@ will select the edge with weight 4 and we end up with the minimum spanning tree 
 
 Implementation:with adjacency list
 
-
+```cpp
 #include<bits/stdc++.h>
 #define PII pair<int,int>
 
@@ -102,6 +102,8 @@ int main()
 
 	return 0 ;
 }
+
+```
 
 
                                           The End
