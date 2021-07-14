@@ -4,7 +4,7 @@ https://youtu.be/eL-KzMXSXXI
 
 There are different ways to solve the algo.
 
-
+## 1st approach
 
 Graph Algo book(shafeet):
 Here we start from the beginning node which contains 0 indegree.
@@ -36,9 +36,13 @@ procedure topsort (G):
     
 ```
 
+<br>
+<br>
 
+<br>
+<br>
 
-
+## 2nd approach
 
 ## Better approach : Using DFS
 
