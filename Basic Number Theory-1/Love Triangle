@@ -1,0 +1,88 @@
+Two boys, Venky and Sagar, are at war over a girl, Riu. Driven by their feelings, 
+they decided to confess to Riu. Since both of them were equally dumb, Riu decided that
+she would go out with that boy who would successfully find the pattern and thus prove that he is less dumb.
+
+Read input until end of file.
+
+Given : 0<=N<=10^18
+
+SAMPLE INPUT 
+1
+2
+3
+10
+100
+SAMPLE OUTPUT 
+1
+2
+3
+11
+121
+
+
+hint:Converting base form 10 to 9
+How would you convert decimal to base 9?
+
+For the integer part:
+
+Divide through 9 until the quotient is zero. Than read the reminders in reverse order.
+
+For example 125 43910=211 0569
+
+Calculation:
+
+125439:9=13937	r=6
+13937 :9=1548	r=5
+1548  :9=172	r=0
+172   :9=19		r=1
+19    :9=2		r=1
+2     :9=0		r=2
+For the part after decimal just multiply with 9 until you get a whole number or a period starts to emerge (this will always be the case as 9 and 10 are co-prime) and take the digit you get before the decimal point as result (this time in order).
+
+for example 0.410=35¯¯¯¯¯9
+
+Calculation:
+
+0.4*9=3.6
+0.6*9=5.4
+0.4*9=3.6 <-- and we can stop here as you can see we get into a loop
+an other way would be transfer the decimal to a fraction, convert both the numerator and the denominator to base 9 and try base 9 division here:
+
+0.4=25
+
+Ok remember when dividing that it is base 9:
+
+2:5=0.35
+20_9=18
+16_9=15
+ 30_9=27
+ 27_9=25
+  2 <---again
+-------------------------------------------------------Solution---------------------------------------------------
+
+#include <iostream>
+#include <cstdlib>
+#include <string>
+using namespace std;
+
+long long base9(long long n)
+{
+    if (n < 9)
+        return n;
+    else
+    {
+        return (n % 9 + 10 * base9(n / 9));
+    }
+}
+
+int main()
+{
+    string str;
+    long long n;
+    while (cin >> n)
+    {
+        
+        cout << base9(n) << "\n";
+    }
+    return 0;
+}

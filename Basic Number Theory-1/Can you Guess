@@ -1,0 +1,58 @@
+No problem statement.
+
+Find the logic from the given sample input/output.
+
+And answer Q queries.
+
+Constraints :
+
+1 <= Value <= 100000
+1<=nunber of query<=10000
+
+SAMPLE INPUT 
+8
+10
+30
+45
+9
+69
+77
+127
+150
+SAMPLE OUTPUT 
+8
+42
+33
+4
+27
+19
+1
+222
+
+
+Hint :all divisors sum
+
+Solution:
+#include <iostream>
+
+using namespace std ;
+
+int main()
+{
+    int t; 
+    cin >> t;
+    while (t--)
+    {
+        int a ;
+        cin >> a ;
+        int sum = 0 ;
+        for(int i = 1 ; i < a ;i++)
+        {
+            if(a%i == 0)
+            sum+=i ;
+        }
+        cout << sum <<endl ;
+        sum = 0 ;
+    }
+    return 0;
+}

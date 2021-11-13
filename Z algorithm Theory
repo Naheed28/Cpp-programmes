@@ -1,0 +1,99 @@
+Z algorithm Theory
+
+Step 1:
+    String string = "ababaa"
+    String pat    = "aba"       // a string pattern
+
+    Now we have to merge it by adding a special character in between .
+
+    String total = string + "$" + pat 
+
+Step 2:
+
+    Now we have to create a Z array for the total string .
+
+    total = a b a $ a b a b a a
+    Z[]   = 0 0 1 0 3 0 3 0 1 1
+
+    here we maintain an  interval [l , r] 
+
+    total = a b a $ a b a b a a
+            l       r                      //just an example
+
+
+    we have to fulfill an important condition
+    ie : 1 <= l <= i <= r
+                   |
+                   iterator
+
+
+Input : aba$ababaa
+Output: 0010303011
+
+what does z[i] say?
+It says that there is a prefix in a string that matches the length of z[i] ;
+There are two positions where aba matches .
+And its identifiable by its number which is 3
+
+
+
+A cpp  code is given below :
+
+#include <iostream>
+#include <bits/stdc++.h>
+
+using namespace std;
+
+auto z_algo(string str)
+{
+    int len = str.length();
+    int l(0), r(0); //for the interval
+
+    vector<int> z(len); // declaring  a z vector
+
+    for (int i = 1; i < len; i++)
+    {
+        if (i > r) //if i > r ,which does not satisfy the condition
+        {
+            l = r = i; //to satisfy  the condition
+            while (r < len and str[r] == str[r - l])
+                r++; //here we will move only r
+            z[i] = r - l;
+            r--;
+        }
+        else //if i <= r ,which means valid
+        {
+            int idx = i - l;     //its a relative index
+            if (i + z[idx] <= r) //for checking weather the saved value is reusable or not
+                z[i] = z[idx];
+            else
+            {
+                l = i; //we will move l and check
+                while (r < len and str[r] == str[r - l])
+                    r++;
+                z[i] = r - l;
+                r--;
+            }
+        }
+    }
+
+    return z;
+}
+
+int main()
+{
+
+    string str;
+    cin >> str;
+
+    auto z = z_algo(str);
+    for (auto x : z) //iterating the vector
+    {
+        cout << x << " ";
+    }
+    return 0;
+}
+
+
+---------------------------------------------The End --------------------------------------
+    

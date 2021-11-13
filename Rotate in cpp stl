@@ -1,0 +1,75 @@
+std::rotate() function with example in C++ STL
+
+ 
+C++ STL | std::rotate() function: Here, we are going to learn about the rotate() function of algorithm header in C++ STL with example.
+Submitted by IncludeHelp, on May 26, 2019
+
+C++ STL std::rotate() function
+rotate() function is a library function of algorithm header, it is used to rotate left the elements of a sequence within a given range,
+it accepts the range (start, end) and a middle point, it rotates the elements in such way that the element pointed by the middle iterator
+becomes the new first element.
+
+Note: To use rotate() function – include <algorithm> header or you can simple use <bits/stdc++.h> header file.
+
+Syntax of std::rotate() function
+
+    std::rotate(iterator start, iterator middle, iterator end);
+Parameter(s):
+
+iterator start – an iterator pointing to the first element of the sequence.
+iterator middle – an iterator pointing to the middle or any other elements from where we want to start the rotation.
+iterator end – an iterator pointing to the last element of the sequence.
+Return value: void – it returns noting.
+
+Example:
+
+    Input:
+    vector<int> v{ 10, 20, 30, 40, 50 };
+    
+    //rotating vector from 2nd element
+    rotate(v.begin(), v.begin() + 2, v.end());
+        
+    Output:
+    30 40 50 10 20
+C++ STL program to demonstrate use of std::rotate() function
+In this program, we have a vector and we are rotating its elements from 2nd index.
+
+//C++ STL program to demonstrate use of
+//std::rotate() function
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+//main code
+int main()
+{
+    //vector
+    vector<int> v{ 10, 20, 30, 40, 50 };
+
+    //printing vector elements
+    cout << "vector elements begfore rotating..." << endl;
+    for (int x : v)
+        cout << x << " ";
+    cout << endl;
+
+    //rotating vector from 2nd element
+    rotate(v.begin(), v.begin() + 2, v.end());
+
+    cout << "vector elements after rotating..." << endl;
+    for (int x : v)
+        cout << x << " ";
+    cout << endl;
+
+    return 0;
+}
+Output
+
+vector elements begfore rotating...
+10 20 30 40 50
+vector elements after rotating...
+30 40 50 10 20
+
+
+
+                                  The End

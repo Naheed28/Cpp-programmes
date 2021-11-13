@@ -1,0 +1,69 @@
+Find the answer of ({A^B}/{C})%M.
+
+Input:
+The only line of input consists of four integers A,B,C and M. The input always has C and M such that gcd(C,M)=1.
+
+Output:
+Print the answer as asked in the problem statement.
+
+Constraints:
+1 <= A,B,C,M <= 10^9
+gcd(C,M)=1.
+
+SAMPLE INPUT 
+2 3 4 5
+SAMPLE OUTPUT 
+2
+
+
+
+hint:Pre-Requisites : Extended Euclidean Algorithm, Modular Exponentiation.these are needed for solving the problem
+
+
+Solution:
+#include <iostream>
+using namespace std;
+long long int d, z, y;
+long long int modularExponentiation(long long int x,long long int n,long long int M)
+{
+    if(n==0)
+        return 1;
+    else if(n%2 == 0)        //n is even
+        return modularExponentiation((x*x)%M,n/2,M);
+    else                             //n is odd
+        return (x*modularExponentiation((x*x)%M,(n-1)/2,M))%M;
+
+}
+void extendedEuclid(long long int c, long long int m)
+{
+    if (m == 0)
+    {
+        d = c;
+        z = 1;
+        y = 0;
+    }
+    else
+    {
+        extendedEuclid(m, c % m);
+        long long int temp = z;
+        z = y;
+        y = temp - (c / m) * y;
+    }
+}
+long long int modInverse(int c, int M)
+{
+    extendedEuclid(c, M);
+    return (z % M + M) % M;
+}
+int main()
+{
+    long long int a, b, c, m, ans1, ans2;
+    cin >> a >> b >> c >> m;
+    ans1 = modularExponentiation(a, b,m);
+    ans2 = modInverse(c, m);
+    cout << ((ans1 % m) * (ans2 % m)) % m;
+    return 0;
+}
+
+
+--------------------------------------------------The End--------------------------------------------------

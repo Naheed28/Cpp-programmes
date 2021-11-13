@@ -1,0 +1,14 @@
+Geometric progression also known as geometric secequence in short GP.
+
+1 + 2 + 4 + .... + (2^i) = (2^n) - 1
+
+here n = number of elements .
+The value of i :
+	0 <= i <= n
+
+Pro Trick for calculating power of 2 :
+	pw = 1 ;
+	int val = (1 << pw);    // (1<<pw) == pow(2,pw)
+	
+
+
