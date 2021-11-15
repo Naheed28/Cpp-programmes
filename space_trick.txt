@@ -1,0 +1,17 @@
+
+## It will print the elements in the vector with spaces between them and \n at the end.
+
+
+
+
+vector<int>arr(n)
+
+for(int i = 0 ; i < n ;i++)
+    arr[i] = i ;
+
+
+
+for(int j = 0 ; j < n ;j++)
+    cout << arr[j] << " \n"[i+1 == arr.size()] ;
+
+
