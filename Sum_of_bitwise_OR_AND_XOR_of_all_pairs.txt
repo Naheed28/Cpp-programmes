@@ -1,0 +1,135 @@
+// https://www.geeksforgeeks.org/sum-xor-pairs-array/
+// An efficient C++ program to compute
+// sum of bitwise OR,AND,XOR of all pairs
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+
+ 
+// Returns sum of bitwise XOR
+// of all pairs
+int sumXOR(int arr[], int n)
+{
+    int sum = 0;
+
+    // i-th bit position
+    for (int i = 0; i < 32; i++)
+    {
+        //  Count of zeros and ones
+        int zero = 0, one = 0;
+         
+        // Individual sum at each bit position
+        int idsum = 0;
+        for (int j = 0; j < n; j++)
+        {
+            if (arr[j] % 2 == 0)
+                zero++;
+            else
+                one++;
+            arr[j] /= 2;
+        }
+         
+        // calculating individual bit sum
+        // since a valid pair is 1 0 
+        idsum = zero * one * (1 << i);
+         
+        // final sum   
+        sum += idsum;
+    }
+    return sum;
+}
+
+
+
+
+ 
+// Returns sum of bitwise OR
+// of all pairs
+// mathematical explanation
+// 5 -> 0 1 0 1
+// 9 -> 1 0 0 1
+// 7 -> 0 1 1 1
+// 6 -> 0 1 1 0
+// (4C2-3C2)*2^3 + (4C2-1C2)*2^2 + (4C2-2C2)*2^1 + (4C2-1C2)*2^0 = 64
+// (6-3)*2^3     + (6-0)*2^2     + (6-1)*2^1     + (6-0)*2^0     = 64
+int sumOR(int arr[], int n)
+{
+    int sum = 0;
+
+    // i-th bit position
+    for (int i = 0; i < 32; i++)
+    {
+        //  Count of zeros and ones
+        int zero = 0, one = 0;
+         
+        // Individual sum at each bit position
+        int idsum = 0;
+        for (int j = 0; j < n; j++)
+        {
+            if (arr[j] % 2 == 0)
+                zero++;
+            else
+                one++;
+            arr[j] /= 2;
+        }
+         
+        // calculating individual bit sum
+
+        // number of total pairs possible(nC2) - number of zero pairs(zeroC2) = number of possible pairs
+        idsum =  (((n*(n-1))/2 ) - ((zero*(zero-1))/2 )) * (1 << i);
+ 
+        // final sum   
+        sum += idsum;
+    }
+    return sum;
+}
+
+
+// Returns sum of bitwise AND
+// of all pairs
+int sumAND(int arr[], int n)
+{
+    int sum = 0;
+
+    // i-th bit position
+    for (int i = 0; i < 32; i++)
+    {
+        //  Count of zeros and ones
+        int zero = 0, one = 0;
+         
+        // Individual sum at each bit position
+        int idsum = 0;
+        for (int j = 0; j < n; j++)
+        {
+            if (arr[j] % 2 == 0)
+                zero++;
+            else
+                one++;
+            arr[j] /= 2;
+        }
+         
+        // calculating individual bit sum
+        // just for 1
+        idsum =  ((one*(one-1))/2 )* (1 << i);
+ 
+        // final sum   
+        sum += idsum;
+    }
+    return sum;
+}
+
+
+
+ 
+int32_t main()
+{
+    int sum = 0;
+    int arr[] = { 5, 9, 7, 6 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+    
+
+    // cout << "XOR sum " << sumXOR(arr, n) << endl ;
+    // cout << "OR sum " << sumOR(arr, n) << endl ;
+    cout << "AND sum " << sumAND(arr, n) << endl ;
+    return 0;
+}
