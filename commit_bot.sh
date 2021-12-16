@@ -1,10 +1,5 @@
-#!/bin/bash
-
-echo "Hello I am commit BOT"
-
+#!/usr/bin/bash
 
 git add .
-git commit -m "bot commit"
+git commit -m "from bot"
 git push
-echo "NaheedRayan" 
-echo "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"
