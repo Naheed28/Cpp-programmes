@@ -1,0 +1,3 @@
+[
+	{ "keys": ["ctrl+alt+n"], "command": "build", "args": {"select": true} },
+]
