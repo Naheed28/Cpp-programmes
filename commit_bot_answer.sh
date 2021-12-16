@@ -9,6 +9,6 @@ expect "Username for 'https://github.com': "
 send -- "NaheedRayan\r"
 
 expect "Password*"
-send -- "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\r"
+send -s "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\r"
 
 
