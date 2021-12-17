@@ -9,7 +9,7 @@ expect "Username for 'https://github.com': "
 send -- "NaheedRayan\r"
 
 
-expect "Password for "
-send -- "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"
+expect "Password for 'https://NaheedRayan@github.com': "
+send -- "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\n"
 interact
 
