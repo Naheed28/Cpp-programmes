@@ -11,5 +11,7 @@ send -- "NaheedRayan\r"
 
 
 expect "Password for 'https://NaheedRayan@github.com': "
-send -- "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\n"
+send -- "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\n"
 interact
+
+send "Yeap\n"
