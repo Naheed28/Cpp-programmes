@@ -9,7 +9,7 @@ spawn ./commit_bot.sh
 expect "Username for 'https://github.com': "
 send -- "NaheedRayan\r"
 
-set timeout 50
+
 expect "Password for 'https://NaheedRayan@github.com': "
-send -- "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\n"
+send -- "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\n"
 interact
