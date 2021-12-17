@@ -11,5 +11,5 @@ send -- "NaheedRayan\r"
 
 expect "Password for "
 send -- "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\r\r"
-
+interact
 
